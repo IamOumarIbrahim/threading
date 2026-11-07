@@ -1,0 +1,13 @@
+# Benchmark pipeline. Install torch for your CUDA version first if needed.
+torch==2.6.0
+ultralytics==8.4.174
+matplotlib==3.10.9
+numpy==2.5.2
+pandas==2.3.3
+pyyaml==6.0.2
+
+# Tests
+pytest>=9,<10
+
+# Recognition study
+-r recognition/requirements.txt

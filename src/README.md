@@ -7,6 +7,14 @@ The source package is organized into three modular layers:
 
 ---
 
+## `run_threaded_experiment.py`
+The filography benchmark: splits the dataset, makes YOLOv12n pseudo labels, renders
+each algorithm and thread count with `build/threader.exe`, trains, and writes
+`results/threaded_benchmark_results.*`. Runs resume from
+`results/threaded_benchmark_progress.json`.
+
+---
+
 ## `run_terminal.py`
 Interactive menu-driven terminal for configuring and launching dataset downloads,
 YOLO model selection, and CUDA hardware benchmarking; run it from the project root with `python src/run_terminal.py`.

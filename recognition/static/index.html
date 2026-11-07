@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#161616">
+<meta name="robots" content="noindex">
+<title>Recognition</title>
+<link rel="stylesheet" href="/static/style.css">
+<script>
+  try {
+    const theme = localStorage.getItem("recognition.theme");
+    if (theme) document.documentElement.dataset.theme = theme;
+  } catch { /* defaults to dark */ }
+</script>
+</head>
+<body>
+
+<form id="login" class="center" hidden>
+  <h1>Recognition task</h1>
+  <input id="username" placeholder="Username" autocomplete="username"
+         autocapitalize="none" autocorrect="off" spellcheck="false" required>
+  <button type="submit">Continue</button>
+  <p id="login-error" class="error" role="alert"></p>
+</form>
+
+<form id="consent" class="page" hidden>
+  <h1>Consent</h1>
+  <p>You are invited to take part in a research study on how people recognise objects in images made of thin lines.</p>
+  <ul>
+    <li><strong>Task:</strong> look at each image and type what you recognise.</li>
+    <li><strong>Data:</strong> your answers, response times, device type and full name.</li>
+    <li><strong>Use:</strong> answers are analysed under your username and may be published. Your name is kept only as a record of consent.</li>
+    <li><strong>Your choice:</strong> taking part is voluntary. You can stop at any time.</li>
+  </ul>
+  <p id="contact" class="muted"></p>
+  <label class="check"><input id="agree" type="checkbox"> I have read this and agree to take part.</label>
+  <input id="fullname" placeholder="Full name" autocomplete="name" aria-label="Full name">
+  <button type="submit">Agree and continue</button>
+  <p id="consent-error" class="error" role="alert"></p>
+</form>
+
+<section id="intro" class="page" hidden>
+  <h1>How it works</h1>
+  <p>Each image is drawn only with thin lines. Enter what you can recognise.</p>
+  <div id="demo" aria-hidden="true"></div>
+  <div class="t-caption">
+    <div class="t-head"><span id="t-count" class="muted"></span><strong id="t-title"></strong></div>
+    <p><span class="t-tag">Computer</span> <span id="t-computer"></span></p>
+    <p><span class="t-tag">Phone</span> <span id="t-phone"></span></p>
+    <p id="t-note" class="muted"></p>
+  </div>
+  <div class="row t-controls">
+    <button id="t-prev" class="ghost" type="button">Previous</button>
+    <button id="t-pause" class="ghost" type="button">Pause</button>
+    <button id="t-next" class="ghost" type="button">Next</button>
+  </div>
+  <details>
+    <summary>All steps as text</summary>
+    <ol id="t-steps"></ol>
+  </details>
+  <div class="row">
+    <button id="intro-skip" class="ghost" type="button">Skip</button>
+    <button id="intro-start" type="button">Start</button>
+  </div>
+</section>
+
+<main id="task" hidden>
+  <header>
+    <button id="help" class="link" type="button">Help</button>
+    <div class="counter"><strong id="left">0</strong> left<span id="eta"></span></div>
+    <button id="menu" class="link" type="button">Menu</button>
+  </header>
+  <button id="bar" type="button" aria-label="Show all tasks"><canvas id="bar-canvas"></canvas></button>
+
+  <div id="work">
+    <div id="stage">
+      <img id="image" alt="Image to recognise">
+      <div id="boxes"></div>
+      <div id="chooser" hidden></div>
+    </div>
+    <section id="side">
+      <h2>Recognized objects</h2>
+      <ul id="objects"></ul>
+      <p id="none">None yet</p>
+    </section>
+  </div>
+
+  <section id="panel">
+    <div class="entry-row">
+    <input id="entry" placeholder="Type what you see" autocomplete="off"
+           autocapitalize="none" autocorrect="off" spellcheck="false"
+           enterkeyhint="send" aria-label="Type what you see">
+    <label id="size">Size <input id="size-range" type="range" min="30" max="100" step="5" value="100" aria-label="Image size"></label>
+    </div>
+    <div class="actions">
+      <button id="back" type="button" disabled>← Back</button>
+      <button id="unidentified" type="button">Unidentified</button>
+      <button id="next" type="button">Next →</button>
+    </div>
+    <p id="status" role="status"></p>
+    <p id="sync" role="status"></p>
+  </section>
+</main>
+
+<div id="sheet" hidden>
+  <div class="sheet-head">
+    <strong id="sheet-title"></strong>
+    <button id="sheet-close" type="button">Close</button>
+  </div>
+  <div id="sheet-tasks">
+    <div class="tally" id="tally"></div>
+    <canvas id="grid" aria-label="All tasks"></canvas>
+    <p class="muted small-note">Tap a square to open that image.</p>
+  </div>
+  <div id="sheet-menu">
+    <p class="muted" id="who"></p>
+    <button id="theme" class="ghost" type="button"></button>
+    <button id="signout" class="ghost" type="button">Sign out</button>
+  </div>
+</div>
+
+<section id="finished" class="center" hidden>
+  <h1>All done</h1>
+  <p>Every answer is saved. Thank you.</p>
+  <button id="review" class="ghost" type="button">Back to last image</button>
+</section>
+
+<script src="/static/vendor/anime.min.js"></script>
+<script src="/static/tutorial.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

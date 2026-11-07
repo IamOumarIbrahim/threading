@@ -13,13 +13,12 @@ Usage:
 import argparse
 import json
 import math
-import os
 import shutil
 import sys
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 # Ensure UTF-8 stdout
 if hasattr(sys.stdout, "reconfigure"):

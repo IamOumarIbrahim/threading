@@ -1,0 +1,12 @@
+{
+  "usernames": [
+    "PancakeEater3001", "WaffleWizard42", "TurboNoodle88", "SilentPickle7",
+    "CosmicBagel19", "NachoNinja256", "LazyLlama404", "PixelPotato12",
+    "FrostyMuffin77", "CaptainCrumbs99"
+  ],
+  "raters_per_image": 10,
+  "data_dir": "D:/IMAGE_DATASET",
+  "port": 8765,
+  "order_seed": 20261107,
+  "contact": "u22200741@sharjah.ac.ae"
+}

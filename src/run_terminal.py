@@ -40,7 +40,6 @@ from eval_engine import (
     _count_all_images,
     _list_result_runs,
     action_clear_dataset,
-    action_clear_model_selection,
     action_clear_results,
     action_run_tests,
     action_run_training,
@@ -171,7 +170,7 @@ def prompt_multiple_seeds(current_seeds: list[int]) -> list[int] | None:
 
     seeds: list[int] = []
     while len(seeds) < count:
-        remaining = count - len(seeds)
+        count - len(seeds)
         idx = len(seeds) + 1
         prompt_txt = f"Seed #{idx} of {count}: " if count > 1 else "Seed: "
         raw_val = input(paint(prompt_txt, BOLD, MAGENTA)).strip()
@@ -416,7 +415,7 @@ def class_body(app):
     return [
         "Pick a number to toggle  ✔ on/off.",
         f"Active ({n}): {paint(shown, BOLD, GREEN)}",
-        f"Downloads will be grouped into dataset/<class>/ subfolders.",
+        "Downloads will be grouped into dataset/<class>/ subfolders.",
     ]
 
 

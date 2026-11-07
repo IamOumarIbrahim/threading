@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Recognition admin</title>
+<link rel="stylesheet" href="/static/style.css">
+<script>
+  try {
+    const theme = localStorage.getItem("recognition.theme");
+    if (theme) document.documentElement.dataset.theme = theme;
+  } catch { /* defaults to dark */ }
+</script>
+<style>
+  body { padding: 16px; max-width: 1180px; margin: 0 auto; }
+  .tiles { display: flex; flex-wrap: wrap; gap: 24px; margin: 8px 0 18px; }
+  .tiles strong { display: block; font-size: 24px; font-variant-numeric: tabular-nums; }
+  .tiles span { color: var(--muted); font-size: 13px; }
+  .wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 14px; }
+  th, td { text-align: right; padding: 9px 7px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:nth-child(-n+3), td:nth-child(-n+3) { text-align: left; }
+  th { color: var(--muted); font-weight: 500; font-size: 13px; }
+  .meter { display: inline-block; width: 70px; height: 5px; margin-right: 7px; background: var(--line); vertical-align: middle; }
+  .meter i { display: block; height: 100%; background: var(--accent); }
+  .online { color: var(--accent); }
+  .paused { color: var(--flag); }
+  .muted { color: var(--muted); }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .small { padding: 5px 9px; font-size: 13px; font-weight: 400; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 8px; text-decoration: none; }
+  a.small { display: inline-block; }
+  td .small + .small { margin-left: 4px; }
+</style>
+</head>
+<body>
+<h1>Progress</h1>
+<div class="tiles" id="tiles"></div>
+<div class="wrap"><table>
+  <thead><tr>
+    <th>User</th><th>Status</th><th>Consent</th><th>Done</th><th>Left</th><th>Skipped</th><th>Unidentified</th>
+    <th>Changed</th><th>s/image</th><th>Time spent</th><th>Device</th><th>Sign-ins</th><th></th>
+  </tr></thead>
+  <tbody id="rows"></tbody>
+</table></div>
+<div class="bar">
+  <a class="small" id="csv">Download all answers</a>
+  <a class="small" id="consents">Download consents</a>
+  <a class="small" id="backup">Download backup</a>
+  <button class="small" id="copy" type="button">Copy study link</button>
+  <button class="small" id="names" type="button">Copy usernames</button>
+  <button class="small theme" type="button"></button>
+</div>
+<script>
+const key = encodeURIComponent(new URLSearchParams(location.search).get("key"));
+const $ = (id) => document.getElementById(id);
+$("csv").href = `/admin/responses.csv?key=${key}`;
+$("consents").href = `/admin/consents.csv?key=${key}`;
+$("backup").href = `/admin/backup.sqlite?key=${key}`;
+let names = [];
+
+function ago(iso) {
+  const s = Math.max(0, (Date.now() - new Date(iso)) / 1000);
+  if (s < 3600) return `${Math.max(1, Math.round(s / 60))}m ago`;
+  if (s < 86400) return `${Math.round(s / 3600)}h ago`;
+  return new Date(iso).toLocaleDateString();
+}
+function duration(ms) {
+  const m = Math.round(ms / 60000);
+  return m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m` : `${m}m`;
+}
+function cell(content, className) {
+  const td = document.createElement("td");
+  if (content instanceof Node) td.append(content); else td.textContent = content;
+  if (className) td.className = className;
+  return td;
+}
+function status(u) {
+  if (u.paused) return ["Paused", "paused"];
+  if (u.online) return ["Online", "online"];
+  if (u.last_seen) return [`Seen ${ago(u.last_seen)}`, ""];
+  return ["Never signed in", "muted"];
+}
+async function post(path, body) {
+  await fetch(`${path}?key=${key}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  refresh();
+}
+function button(text, onclick) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "small";
+  b.textContent = text;
+  b.onclick = onclick;
+  return b;
+}
+function actions(u) {
+  const box = document.createDocumentFragment();
+  const csv = document.createElement("a");
+  csv.className = "small";
+  csv.textContent = "CSV";
+  csv.href = `/admin/responses.csv?key=${key}&user=${encodeURIComponent(u.username)}`;
+  box.append(csv);
+  box.append(button(u.paused ? "Resume" : "Pause", () => post("/api/admin/pause", { username: u.username, paused: !u.paused })));
+  box.append(button("Reset", () => {
+    const typed = prompt(`This clears ${u.done} answers for ${u.username}. They are kept in the archive table.\nType the username to confirm.`);
+    if (typed && typed.toLowerCase() === u.username.toLowerCase()) post("/api/admin/reset", { username: u.username });
+  }));
+  return box;
+}
+function tile(value, label) {
+  const div = document.createElement("div");
+  const strong = document.createElement("strong");
+  strong.textContent = value;
+  const span = document.createElement("span");
+  span.textContent = label;
+  div.append(strong, span);
+  return div;
+}
+function meter(u) {
+  const box = document.createElement("span");
+  const bar = document.createElement("span");
+  bar.className = "meter";
+  const fill = document.createElement("i");
+  fill.style.width = `${u.total ? (100 * u.done) / u.total : 0}%`;
+  bar.append(fill);
+  box.append(bar, u.done.toLocaleString());
+  return box;
+}
+async function refresh() {
+  const res = await fetch(`/api/admin/progress?key=${key}`);
+  if (!res.ok) return;
+  const { users } = await res.json();
+  names = users.map((u) => u.username);
+  const done = users.reduce((n, u) => n + u.done, 0);
+  const started = users.filter((u) => u.last_seen).length;
+  const finished = users.filter((u) => u.total && u.done >= u.total).length;
+  $("tiles").replaceChildren(
+    tile(users.filter((u) => u.online).length, "online"),
+    tile(`${started}/${users.length}`, "signed in"),
+    tile(finished, "finished"),
+    tile(done.toLocaleString(), "answers"),
+  );
+  $("rows").replaceChildren(...users.map((u) => {
+    const tr = document.createElement("tr");
+    const [text, className] = status(u);
+    const controls = document.createElement("span");
+    controls.append(actions(u));
+    tr.append(
+      cell(u.username), cell(text, className), cell(u.consent_name || "-", u.consent_name ? "" : "muted"),
+      cell(meter(u)), cell((u.total - u.done).toLocaleString()), cell(u.skipped.toLocaleString()),
+      cell(u.unidentified.toLocaleString()),
+      cell(u.edits), cell(u.pace_ms ? (u.pace_ms / 1000).toFixed(1) : "-"),
+      cell(duration(u.spent_ms)), cell(u.device || "-"), cell(u.logins), cell(controls),
+    );
+    return tr;
+  }));
+}
+function flash(button, text) {
+  const old = button.textContent;
+  button.textContent = text;
+  setTimeout(() => { button.textContent = old; }, 1200);
+}
+async function copy(button, text) {
+  try { await navigator.clipboard.writeText(text); flash(button, "Copied"); }
+  catch { prompt("Copy this:", text); }
+}
+$("copy").onclick = (e) => copy(e.target, location.origin);
+$("names").onclick = (e) => copy(e.target, names.join("\n"));
+function paintTheme() {
+  document.querySelector(".theme").textContent =
+    document.documentElement.dataset.theme === "light" ? "Dark mode" : "Light mode";
+}
+document.querySelector(".theme").onclick = () => {
+  const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("recognition.theme", next); } catch { /* this visit only */ }
+  paintTheme();
+};
+paintTheme();
+refresh();
+setInterval(refresh, 5000);
+</script>
+</body>
+</html>
