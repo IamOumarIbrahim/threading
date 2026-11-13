@@ -66,7 +66,7 @@ async function api(path, body) {
 function show(view) {
   for (const id of ["login", "consent", "intro", "task", "finished"]) $(id).hidden = id !== view;
   $("sheet").hidden = true;
-  if (view === "intro") window.tutorial.play(); else window.tutorial.stop();
+  if (view === "intro") window.tutorial.play(!introSeen); else window.tutorial.stop();
   if (view === "login") $("username").focus();
   if (view === "task") {
     paintBar();
@@ -127,7 +127,6 @@ function leaveIntro() {
     show("finished");
   }
 }
-$("intro-skip").addEventListener("click", leaveIntro);
 $("intro-start").addEventListener("click", leaveIntro);
 $("help").addEventListener("click", () => show("intro"));
 

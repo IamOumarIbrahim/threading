@@ -2,9 +2,11 @@
   "usernames": [
     "PancakeEater3001", "WaffleWizard42", "TurboNoodle88", "SilentPickle7",
     "CosmicBagel19", "NachoNinja256", "LazyLlama404", "PixelPotato12",
-    "FrostyMuffin77", "CaptainCrumbs99"
+    "FrostyMuffin77", "CaptainCrumbs99", "BlazingBurrito33", "SneakyToaster8",
+    "MangoMarauder21", "QuantumQuokka64", "DizzyDumpling5"
   ],
-  "raters_per_image": 10,
+  "demo_usernames": ["TestPilot500"],
+  "raters_per_image": 15,
   "data_dir": "D:/IMAGE_DATASET",
   "port": 8765,
   "order_seed": 20261107,

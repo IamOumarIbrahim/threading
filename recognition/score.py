@@ -97,9 +97,10 @@ def main() -> int:
 
     cells, raters = defaultdict(list), defaultdict(list)
     per_image = defaultdict(dict)
+    demos = {u.lower() for u in cfg.get("demo_usernames", [])}
     for r in db.execute("SELECT * FROM responses"):
         item = manifest.get(r["image_id"])
-        if item is None or (args.split and item["split"] != args.split):
+        if r["username"] in demos or item is None or (args.split and item["split"] != args.split):
             continue
         labels = json.loads(r["labels"])
         truth = set(filter(None, item["classes"].split("|")))

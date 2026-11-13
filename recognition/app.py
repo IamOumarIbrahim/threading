@@ -172,6 +172,34 @@ def meta_value(db: sqlite3.Connection, key: str, default=None):
     return default
 
 
+def can_append(old: dict, new: dict) -> bool:
+    """New users may join when everyone labels every image and nothing else moved."""
+    n = len(old["users"])
+    return (new["users"][:n] == old["users"] and len(new["users"]) > n
+            and old["raters"] == n and new["raters"] == len(new["users"])
+            and old["seed"] == new["seed"] and old["images"] == new["images"])
+
+
+def add_users(db: sqlite3.Connection, rows: list[dict], users: list[str],
+              seed: int) -> None:
+    """Give users without tasks every image, in their own spaced order."""
+    cell = {r["image_id"]: (r["algorithm"], r["threads_target"]) for r in rows}
+    for user in users:
+        if db.execute("SELECT 1 FROM assignments WHERE username = ? LIMIT 1",
+                      (user,)).fetchone():
+            continue
+        order = spaced_order(sorted(cell), cell, random.Random(f"{seed}:{user}"))
+        db.executemany(
+            "INSERT INTO assignments (username, position, image_id) VALUES (?, ?, ?)",
+            ((user, p, i) for p, i in enumerate(order)))
+
+
+def demo_users(cfg: dict) -> list[str]:
+    """Test accounts: they see everything, but their answers are not study data."""
+    study = {u.lower() for u in cfg["usernames"]}
+    return [u.lower() for u in cfg.get("demo_usernames", []) if u.lower() not in study]
+
+
 def initialise(db_path: Path, cfg: dict, rows: list[dict]) -> tuple[str, str]:
     """Create tables and assignments. Return (cookie secret, admin key)."""
     users = [u.lower() for u in cfg["usernames"]]
@@ -189,16 +217,32 @@ def initialise(db_path: Path, cfg: dict, rows: list[dict]) -> tuple[str, str]:
                                   "images": dataset_hash(rows)})
         stored = meta_value(db, "assignment", fingerprint)
         if stored != fingerprint:
-            sys.exit("config: usernames, raters, seed or images changed since the "
-                     "study started. Restore them, or use a new data folder.")
+            if not can_append(json.loads(stored), json.loads(fingerprint)):
+                sys.exit("config: usernames, raters, seed or images changed since the "
+                         "study started. Restore them, or use a new data folder. New "
+                         "usernames can only be added at the end while every user "
+                         "labels every image.")
+            add_users(db, rows, users, cfg["order_seed"])
+            db.execute("UPDATE meta SET value = ? WHERE key = 'assignment'",
+                       (fingerprint,))
         if not db.execute("SELECT 1 FROM assignments LIMIT 1").fetchone():
             tasks = build_assignments(rows, users, raters, cfg["order_seed"])
             db.executemany(
                 "INSERT INTO assignments (username, position, image_id) "
                 "VALUES (?, ?, ?)",
                 ((u, p, i) for u, ids in tasks.items() for p, i in enumerate(ids)))
+        demos = demo_users(cfg)
+        cell = {r["image_id"]: (r["algorithm"], r["threads_target"]) for r in rows}
+        for demo in demos:  # outside the fingerprint: never touches study tasks
+            if not db.execute("SELECT 1 FROM assignments WHERE username = ? LIMIT 1",
+                              (demo,)).fetchone():
+                order = spaced_order(sorted(cell), cell,
+                                     random.Random(f"{cfg['order_seed']}:{demo}"))
+                db.executemany(
+                    "INSERT INTO assignments (username, position, image_id) "
+                    "VALUES (?, ?, ?)", ((demo, p, i) for p, i in enumerate(order)))
         db.executemany("INSERT OR IGNORE INTO accounts (username) VALUES (?)",
-                       ((u,) for u in users))
+                       ((u,) for u in users + demos))
         secret = meta_value(db, "secret", secrets.token_hex(32))
         admin = meta_value(db, "admin_key", secrets.token_urlsafe(18))
     db.close()
@@ -248,7 +292,7 @@ def number(value, low, high, kind=int):
 
 
 def export_csv(db: sqlite3.Connection, rows: list[dict],
-               user: str | None = None) -> str:
+               user: str | None = None, skip: tuple = ()) -> str:
     by_id = {r["image_id"]: r for r in rows}
     columns = ["username", "image_id", "algorithm", "threads_target",
                "threads_actual", "source", "split", "classes", "labels",
@@ -263,6 +307,8 @@ def export_csv(db: sqlite3.Connection, rows: list[dict],
                WHERE ? IS NULL OR r.username = ?
                ORDER BY r.username, r.answered_at"""
     for r in db.execute(query, (user, user)):
+        if r["username"] in skip:
+            continue
         row = {**by_id.get(r["image_id"], {}), **dict(r)}
         row["labels"] = "|".join(json.loads(r["labels"]))
         writer.writerow(row)
@@ -277,7 +323,8 @@ def create_app(cfg: dict) -> Flask:
     cells = {r["image_id"]: (r["algorithm"], r["threads_target"]) for r in rows}
     sizes = {r["image_id"]: (int(r.get("width") or 100_000),
                              int(r.get("height") or 100_000)) for r in rows}
-    users = {u.lower(): u for u in cfg["usernames"]}  # login ignores case
+    users = {u.lower(): u for u in cfg["usernames"] + cfg.get("demo_usernames", [])}
+    demos = tuple(demo_users(cfg))
     secret, admin_key = initialise(db_path, cfg, rows)
     with connect(db_path) as conn:
         paused = {r["username"] for r in
@@ -601,7 +648,7 @@ def create_app(cfg: dict) -> Flask:
         require_admin()
         result = []
         now = db().execute(f"SELECT {NOW} t").fetchone()["t"]
-        for name in cfg["usernames"]:
+        for name in cfg["usernames"] + cfg.get("demo_usernames", []):
             user = name.lower()
             total, done = counts(user)
             stats = db().execute(
@@ -621,7 +668,8 @@ def create_app(cfg: dict) -> Flask:
                 "SELECT *, strftime('%s', ?) - strftime('%s', last_seen) idle "
                 "FROM accounts WHERE username = ?", (now, user)).fetchone()
             result.append({
-                "username": name, "total": total, "done": done,
+                "username": name, "demo": user in demos,
+                "total": total, "done": done,
                 "unidentified": stats["unidentified"], "edits": stats["edits"],
                 "spent_ms": stats["spent_ms"], "pace_ms": pace_ms(user),
                 "skipped": skipped, "consent_name": info["consent_name"],
@@ -665,6 +713,11 @@ def create_app(cfg: dict) -> Flask:
                        shown_w, shown_h, dpr, device, edits, answered_at
                    FROM responses WHERE username = ?""", (user,))
             conn.execute("DELETE FROM responses WHERE username = ?", (user,))
+            if user in demos:  # replay the first sign-in too
+                conn.execute(
+                    """UPDATE accounts SET consent_name = NULL, consent_at = NULL,
+                           intro_seen = 0, viewing_id = NULL WHERE username = ?""",
+                    (user,))
         return jsonify(ok=True)
 
     @app.get("/admin/responses.csv")
@@ -674,7 +727,7 @@ def create_app(cfg: dict) -> Flask:
         if user and user not in users:
             abort(404)
         name = f"responses_{users[user]}.csv" if user else "responses.csv"
-        return Response(export_csv(db(), rows, user or None), mimetype="text/csv",
+        return Response(export_csv(db(), rows, user or None, demos), mimetype="text/csv",
                         headers={"Content-Disposition": f"attachment; filename={name}"})
 
     @app.get("/admin/consents.csv")

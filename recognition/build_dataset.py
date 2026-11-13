@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Render the human recognition dataset: 10 algorithms x 20 budgets x 25 images.
+"""Render the human recognition dataset: 10 algorithms x 10 budgets x 5 images.
 
-Every COCO val2017 image is used exactly once, so no rater sees a scene twice.
-Each cell receives the same 15/5/5 mix of the benchmark's train/val/test
-splits, and scenes of similar content are dealt evenly across cells.
+500 COCO val2017 scenes are used once each, so no rater sees a scene twice.
+Each cell receives the same 3/1/1 mix of the benchmark's train/val/test
+splits. Scenes are picked evenly across content strata and dealt evenly
+across cells. Scenes listed in --exclude (one file name per line, e.g. scenes
+shown in an earlier round of the study) are never used.
 
 Usage (from the project root):
-    python recognition/build_dataset.py --out D:/IMAGE_DATASET
+    python recognition/build_dataset.py --out D:/IMAGE_DATASET --exclude used.txt
     python recognition/build_dataset.py --out D:/IMAGE_DATASET --verify
 
 Re-running skips images that already exist. The same seeds give the same
@@ -38,9 +40,9 @@ ALGORITHMS = {
     "radon_peel": 4, "stipple_tour": 5, "edge_tangent": 6, "greedy_error": 7,
     "quadtree_hatch": 8, "anchor_web": 9, "thread_painter": 10,
 }
-THREAD_COUNTS = list(range(1000, 20001, 1000))
-PER_CELL = {"train": 15, "val": 5, "test": 5}
-ASSIGN_SEED = 20261107   # scene -> cell assignment
+THREAD_COUNTS = list(range(2000, 20001, 2000))
+PER_CELL = {"train": 3, "val": 1, "test": 1}
+ASSIGN_SEED = 20261109   # scene -> cell assignment (20261107 was the 5000-image round)
 RENDER_SEED = 7          # threader default, also used for the YOLO benchmark
 SPLIT_SEED = 1           # same 60/20/20 split as run_threaded_experiment.py
 
@@ -71,26 +73,34 @@ def make_splits(names: list[str]) -> dict[str, list[str]]:
             "test": shuffled[n_train + n_val:]}
 
 
-def assign(scenes: dict) -> list[dict]:
-    """Deal every scene to exactly one algorithm x budget cell."""
+def stratum(scene: dict) -> tuple:
+    counts = scene["counts"]
+    top = min(counts, key=lambda c: (-counts[c], c)) if counts else ""
+    return "person" in counts, top, sum(counts.values())
+
+
+def assign(scenes: dict, exclude: frozenset = frozenset()) -> list[dict]:
+    """Pick scenes not in `exclude` and deal each to one algorithm x budget cell."""
     cells = [(a, t) for a in ALGORITHMS for t in THREAD_COUNTS]
-    expected = {k: v * len(cells) for k, v in PER_CELL.items()}
-    splits = make_splits(list(scenes))
-    got = {k: len(v) for k, v in splits.items()}
-    if got != expected:
-        sys.exit(f"Expected splits {expected}, found {got}")
+    need = {k: v * len(cells) for k, v in PER_CELL.items()}
+    # Splits come from every scene, so each keeps its benchmark split.
+    splits = {k: [n for n in v if n not in exclude]
+              for k, v in make_splits(list(scenes)).items()}
+    short = {k: (len(splits[k]), n) for k, n in need.items() if len(splits[k]) < n}
+    if short:
+        sys.exit(f"Not enough unused scenes (have, need): {short}")
 
     rng = random.Random(ASSIGN_SEED)
     items = []
     for split, names in splits.items():
-        def stratum(name):
-            counts = scenes[name]["counts"]
-            top = min(counts, key=lambda c: (-counts[c], c)) if counts else ""
-            return "person" in counts, top, sum(counts.values())
+        # Evenly spaced picks from the stratum-sorted pool keep the content mix.
+        pool = sorted(sorted(names), key=lambda n: stratum(scenes[n]))
+        step = len(pool) / need[split]
+        picked = [pool[int((k + 0.5) * step)] for k in range(need[split])]
 
         # Sorted scenes dealt to shuffled cells: every cell gets one scene from
         # each run of similar scenes, so content stays balanced across cells.
-        ordered = sorted(sorted(names), key=stratum)
+        ordered = sorted(picked, key=lambda n: stratum(scenes[n]))
         for start in range(0, len(ordered), len(cells)):
             round_cells = rng.sample(cells, len(cells))
             for name, (algo, threads) in zip(ordered[start:], round_cells):
@@ -167,6 +177,11 @@ def verify(out: Path) -> int:
         problems.append(f"unequal cells: {sorted(Counter(cells.values()).items())}")
     if len({r["source"] for r in rows}) != len(rows):
         problems.append("repeated source scene")
+    excluded = out / "excluded_sources.txt"
+    if excluded.exists():
+        reused = {r["source"] for r in rows} & set(excluded.read_text().split())
+        if reused:
+            problems.append(f"{len(reused)} excluded scenes used, e.g. {min(reused)}")
     for r in rows:
         p = out / r["path"]
         if not p.exists():
@@ -185,6 +200,8 @@ def main() -> int:
     ap.add_argument("--dataset", type=Path, default=ROOT / "dataset")
     ap.add_argument("--exe", type=Path, default=ROOT / "build" / "threader.exe")
     ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 2))
+    ap.add_argument("--exclude", type=Path,
+                    help="file of scene names (one per line) that must not be used")
     ap.add_argument("--limit", type=int, help="render only the first N (smoke test)")
     ap.add_argument("--verify", action="store_true", help="check an existing dataset")
     args = ap.parse_args()
@@ -196,13 +213,16 @@ def main() -> int:
         if not need.exists():
             sys.exit(f"Missing {need}")
 
-    items = assign(load_scenes(args.dataset / "annotations.json"))
+    exclude = frozenset(args.exclude.read_text().split()) if args.exclude else frozenset()
+    items = assign(load_scenes(args.dataset / "annotations.json"), exclude)
     for item in items:
         item["path"] = image_path(item)
     if args.limit:
         items = random.Random(0).sample(items, args.limit)
 
     (args.out / ".tmp").mkdir(parents=True, exist_ok=True)
+    if exclude and not args.limit:
+        (args.out / "excluded_sources.txt").write_text("\n".join(sorted(exclude)) + "\n")
     start, done, failed = time.time(), [], []
     with ThreadPoolExecutor(args.workers) as pool:
         futures = [pool.submit(render, i, args.exe, args.dataset, args.out)

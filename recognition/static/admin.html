@@ -134,13 +134,14 @@ async function refresh() {
   const res = await fetch(`/api/admin/progress?key=${key}`);
   if (!res.ok) return;
   const { users } = await res.json();
-  names = users.map((u) => u.username);
-  const done = users.reduce((n, u) => n + u.done, 0);
-  const started = users.filter((u) => u.last_seen).length;
-  const finished = users.filter((u) => u.total && u.done >= u.total).length;
+  names = users.filter((u) => !u.demo).map((u) => u.username);
+  const study = users.filter((u) => !u.demo);
+  const done = study.reduce((n, u) => n + u.done, 0);
+  const started = study.filter((u) => u.last_seen).length;
+  const finished = study.filter((u) => u.total && u.done >= u.total).length;
   $("tiles").replaceChildren(
-    tile(users.filter((u) => u.online).length, "online"),
-    tile(`${started}/${users.length}`, "signed in"),
+    tile(study.filter((u) => u.online).length, "online"),
+    tile(`${started}/${study.length}`, "signed in"),
     tile(finished, "finished"),
     tile(done.toLocaleString(), "answers"),
   );
@@ -150,7 +151,7 @@ async function refresh() {
     const controls = document.createElement("span");
     controls.append(actions(u));
     tr.append(
-      cell(u.username), cell(text, className), cell(u.consent_name || "-", u.consent_name ? "" : "muted"),
+      cell(u.demo ? `${u.username} (demo)` : u.username), cell(text, className), cell(u.consent_name || "-", u.consent_name ? "" : "muted"),
       cell(meter(u)), cell((u.total - u.done).toLocaleString()), cell(u.skipped.toLocaleString()),
       cell(u.unidentified.toLocaleString()),
       cell(u.edits), cell(u.pace_ms ? (u.pace_ms / 1000).toFixed(1) : "-"),

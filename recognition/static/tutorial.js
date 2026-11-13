@@ -5,17 +5,19 @@ window.tutorial = (() => {
   const $ = (id) => document.getElementById(id);
   const svgNS = "http://www.w3.org/2000/svg";
   const START_LEFT = 4812;
+  const PACE = 1.6;        // stretches every chapter's timing
+  const REPLAY_GAP = 2500; // pause before a chapter repeats
 
   let timers = [];
   let index = 0;
-  let playing = true;
+  let finished = false;
   let caret = null;
   let built = false;
   let left = START_LEFT;
 
   /* Stage helpers ---------------------------------------------------------- */
 
-  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+  const at = (ms, fn) => timers.push(setTimeout(fn, ms * PACE));
 
   function centre(el) {
     const frame = $("demo").getBoundingClientRect();
@@ -23,7 +25,7 @@ window.tutorial = (() => {
     return { x: box.left - frame.left + box.width / 2, y: box.top - frame.top + box.height / 2 };
   }
 
-  function pointTo(el, ms = 550) {
+  function pointTo(el, ms = 800) {
     const { x, y } = centre(el);
     anime({ targets: "#d-pointer", opacity: 1, left: x, top: y, duration: ms, easing: "easeInOutCubic" });
   }
@@ -37,7 +39,7 @@ window.tutorial = (() => {
     const el = $("d-key");
     el.textContent = label;
     anime.remove(el);
-    anime({ targets: el, opacity: [{ value: 1, duration: 100 }, { value: 1, duration: 520 }, { value: 0, duration: 200 }], easing: "easeOutQuad" });
+    anime({ targets: el, opacity: [{ value: 1, duration: 100 }, { value: 1, duration: 900 }, { value: 0, duration: 250 }], easing: "easeOutQuad" });
   }
 
   function type(text) {
@@ -47,7 +49,7 @@ window.tutorial = (() => {
       targets: box,
       n: text.length,
       round: 1,
-      duration: Math.min(text.length * 70, 1300),
+      duration: Math.min(text.length * 110, 2000),
       easing: "linear",
       update: () => { $("d-text").textContent = text.slice(0, box.n); },
     });
@@ -91,7 +93,7 @@ window.tutorial = (() => {
   }
 
   function drawFrame() {
-    anime({ targets: "#d-frame", opacity: [0, 1], width: ["0%", "62%"], height: ["0%", "60%"], duration: 800, easing: "easeOutQuad" });
+    anime({ targets: "#d-frame", opacity: [0, 1], width: ["0%", "62%"], height: ["0%", "60%"], duration: 1280, easing: "easeOutQuad" });
   }
 
   function drawLines() {
@@ -225,11 +227,11 @@ window.tutorial = (() => {
       const frame = $("demo").getBoundingClientRect();
       at(300, () => {
         $("d-pointer").style.opacity = 1;
-        anime({ targets: "#d-pointer", left: image.left - frame.left + image.width * 0.08, top: image.top - frame.top + image.height * 0.25, duration: 500, easing: "easeInOutCubic" });
+        anime({ targets: "#d-pointer", left: image.left - frame.left + image.width * 0.08, top: image.top - frame.top + image.height * 0.25, duration: 800, easing: "easeInOutCubic" });
       });
       at(900, () => {
         drawFrame();
-        anime({ targets: "#d-pointer", left: image.left - frame.left + image.width * 0.7, top: image.top - frame.top + image.height * 0.85, duration: 800, easing: "easeOutQuad" });
+        anime({ targets: "#d-pointer", left: image.left - frame.left + image.width * 0.7, top: image.top - frame.top + image.height * 0.85, duration: 1280, easing: "easeOutQuad" });
       });
       at(1900, () => {
         $("d-chooser").hidden = false;
@@ -242,9 +244,9 @@ window.tutorial = (() => {
     { title: "Resize the image", computer: "Drag the Size slider.", phone: "Drag the Size slider.", note: "Your size is remembered on this device.", ms: 4200, run() {
       at(300, () => pointTo($("d-thumb")));
       at(1000, () => {
-        anime({ targets: "#d-thumb", left: ["100%", "20%", "75%"], duration: 2200, easing: "easeInOutQuad" });
-        anime({ targets: "#d-pointer", translateX: [0, -48, -16], duration: 2200, easing: "easeInOutQuad" });
-        anime({ targets: "#d-image", scale: [1, 0.5, 0.85], duration: 2200, easing: "easeInOutQuad" });
+        anime({ targets: "#d-thumb", left: ["100%", "20%", "75%"], duration: 3500, easing: "easeInOutQuad" });
+        anime({ targets: "#d-pointer", translateX: [0, -48, -16], duration: 3500, easing: "easeInOutQuad" });
+        anime({ targets: "#d-image", scale: [1, 0.5, 0.85], duration: 3500, easing: "easeInOutQuad" });
       });
     } },
     { title: "Track your tasks", computer: "The top bar shows done, unidentified, skipped and remaining. Click it to see every task.", phone: "The top bar shows done, unidentified, skipped and remaining. Tap it to see every task.", note: "Open any square to go to that image.", ms: 5000, run() {
@@ -267,9 +269,7 @@ window.tutorial = (() => {
     } },
   ];
 
-  /* Player ----------------------------------------------------------------- */
-
-  const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Player: moves only when the person presses Next. ------------------------ */
 
   function clearTimers() {
     timers.forEach(clearTimeout);
@@ -286,18 +286,17 @@ window.tutorial = (() => {
 
   function go(n) {
     clearTimers();
-    index = (n + CHAPTERS.length) % CHAPTERS.length;
+    index = Math.min(Math.max(n, 0), CHAPTERS.length - 1);
     const chapter = CHAPTERS[index];
     caption(chapter);
+    $("t-prev").disabled = index === 0;
+    $("t-next").disabled = index === CHAPTERS.length - 1;
+    if (index === CHAPTERS.length - 1) finished = true;
+    $("intro-start").hidden = !finished;
     reset();
-    if (reduced() || !window.anime) return;
+    if (!window.anime) return;
     chapter.run();
-    if (playing) at(chapter.ms, () => go(index + 1));
-  }
-
-  function setPlaying(value) {
-    playing = value;
-    $("t-pause").textContent = playing ? "Pause" : "Play";
+    at(chapter.ms + REPLAY_GAP, () => go(index)); // repeats until they move on
   }
 
   function steps() {
@@ -313,10 +312,12 @@ window.tutorial = (() => {
     }));
   }
 
-  function play() {
+  /* firstTime: Start only appears after the last chapter. */
+  function play(firstTime) {
     build();
     steps();
-    setPlaying(!reduced());
+    finished = !firstTime;
+    $("intro-start").textContent = firstTime ? "Start" : "Back to task";
     if (window.anime && !caret) {
       caret = anime({ targets: "#d-caret", opacity: [1, 0], duration: 500, direction: "alternate", loop: true, easing: "steps(1)" });
     }
@@ -329,9 +330,9 @@ window.tutorial = (() => {
     caret = null;
   }
 
-  $("t-prev").addEventListener("click", () => { setPlaying(false); go(index - 1); });
-  $("t-next").addEventListener("click", () => { setPlaying(false); go(index + 1); });
-  $("t-pause").addEventListener("click", () => { setPlaying(!playing); go(index); });
+  $("t-prev").addEventListener("click", () => go(index - 1));
+  $("t-next").addEventListener("click", () => go(index + 1));
+  $("t-replay").addEventListener("click", () => go(index));
 
   return { play, stop, go, chapters: CHAPTERS.length };
 })();

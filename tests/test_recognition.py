@@ -289,6 +289,58 @@ def test_boxes_are_stored_and_validated(client):
     assert answer(client, image_id, ["dog"], boxes="x").status_code == 400
 
 
+def test_demo_account_stays_out_of_study_data(cfg):
+    first = server.create_app(cfg).test_client()
+    login(first)
+    tasks = first.get("/api/map").get_json()["ids"]
+
+    application = server.create_app({**cfg, "demo_usernames": ["Pilot"]})
+    client = application.test_client()
+    key = application.config["ADMIN_KEY"]
+    login(client)
+    assert client.get("/api/map").get_json()["ids"] == tasks
+
+    demo = application.test_client()
+    login(demo, "pilot")
+    state = demo.get("/api/state").get_json()
+    assert state["username"] == "Pilot" and state["total"] == 12
+    answer(demo, state["queue"][0]["id"], ["demo-only"])
+    assert "demo-only" not in client.get(f"/admin/responses.csv?key={key}").get_data(as_text=True)
+    users = client.get(f"/api/admin/progress?key={key}").get_json()["users"]
+    assert [u["username"] for u in users if u["demo"]] == ["Pilot"]
+
+    client.post(f"/api/admin/reset?key={key}", json={"username": "pilot"})
+    state = demo.get("/api/state").get_json()
+    assert state["done"] == 0 and not state["consented"]
+
+
+def test_users_can_join_when_everyone_labels_everything(cfg):
+    cfg = {**cfg, "raters_per_image": 3}
+    first = server.create_app(cfg).test_client()
+    login(first)
+    before = first.get("/api/map").get_json()["ids"]
+    answer(first, before[0])
+
+    grown = {**cfg, "usernames": cfg["usernames"] + ["dee"], "raters_per_image": 4}
+    application = server.create_app(grown)
+    again = application.test_client()
+    login(again)
+    assert again.get("/api/map").get_json()["ids"] == before
+    assert again.get("/api/state").get_json()["done"] == 1
+    new = application.test_client()
+    login(new, "dee")
+    assert new.get("/api/state").get_json()["total"] == 12
+    server.create_app(grown)  # restarting with the same config is fine
+
+
+def test_users_cannot_be_removed_or_reordered(cfg):
+    cfg = {**cfg, "raters_per_image": 3}
+    server.create_app(cfg)
+    for users in (["ann", "bob"], ["bob", "ann", "cy", "dee"]):
+        with pytest.raises(SystemExit):
+            server.create_app({**cfg, "usernames": users, "raters_per_image": len(users)})
+
+
 def test_scoring():
     result = score.score_answer(["sofa", "Dog", "tree"], {"dog", "couch", "tv"})
     assert (result["hits"], result["said"], result["truth"]) == (2, 2, 3)
@@ -300,14 +352,18 @@ def test_dataset_assignment_is_balanced():
     scenes = {f"{i:012d}.jpg": {"width": 640, "height": 480,
                                 "counts": Counter(person=i % 2, dog=1)}
               for i in range(5000)}
-    items = build_dataset.assign(scenes)
+    used = frozenset(f"{i:012d}.jpg" for i in range(0, 5000, 3))
+    items = build_dataset.assign(scenes, used)
     cells = Counter((i["algorithm"], i["threads_target"]) for i in items)
-    assert len(cells) == 200 and set(cells.values()) == {25}
-    assert len({i["source"] for i in items}) == 5000
-    assert len({i["image_id"] for i in items}) == 5000
+    assert len(cells) == 100 and set(cells.values()) == {5}
+    assert len({i["source"] for i in items}) == 500
+    assert len({i["image_id"] for i in items}) == 500
+    assert not {i["source"] for i in items} & used
     per_split = Counter((i["algorithm"], i["threads_target"], i["split"]) for i in items)
-    assert set(per_split.values()) == {15, 5}
-    assert items == build_dataset.assign(scenes)
+    assert set(per_split.values()) == {3, 1}
+    splits = build_dataset.make_splits(list(scenes))
+    assert all(i["source"] in splits[i["split"]] for i in items)
+    assert items == build_dataset.assign(scenes, used)
 
 
 def test_vocabulary_is_consistent():
