@@ -1,0 +1,501 @@
+identifier,method,threads,ground_truth,source_image,path
+4b94795f62f5,anchor_web,10000,bicycle|fire hydrant,000000008899.jpg,images/anchor_web/10000/000000008899.png
+1ebc0162c64d,anchor_web,10000,orange|person,000000366711.jpg,images/anchor_web/10000/000000366711.png
+feaa4a2af8ee,anchor_web,10000,vase,000000370042.jpg,images/anchor_web/10000/000000370042.png
+9ce7e6e7d32d,anchor_web,10000,bicycle|car|person|skateboard,000000394510.jpg,images/anchor_web/10000/000000394510.png
+30348f3357dc,anchor_web,10000,bowl|chair|dining table|motorcycle|person|spoon,000000578871.jpg,images/anchor_web/10000/000000578871.png
+3021db055e36,anchor_web,12000,bird,000000149622.jpg,images/anchor_web/12000/000000149622.png
+bb9a7c562232,anchor_web,12000,bottle|car|motorcycle|person|truck,000000177934.jpg,images/anchor_web/12000/000000177934.png
+12864401e574,anchor_web,12000,motorcycle|person|truck,000000245448.jpg,images/anchor_web/12000/000000245448.png
+9cd4b9ece8ad,anchor_web,12000,person|tennis racket,000000475191.jpg,images/anchor_web/12000/000000475191.png
+dc82ea21fda0,anchor_web,12000,train,000000519338.jpg,images/anchor_web/12000/000000519338.png
+747d93a25403,anchor_web,14000,banana|chair|umbrella,000000185802.jpg,images/anchor_web/14000/000000185802.png
+c7a1abca3f18,anchor_web,14000,sink|toilet,000000237316.jpg,images/anchor_web/14000/000000237316.png
+19c58f4919ed,anchor_web,14000,person|train,000000249643.jpg,images/anchor_web/14000/000000249643.png
+b55757888655,anchor_web,14000,toilet,000000394328.jpg,images/anchor_web/14000/000000394328.png
+d1708d8d7036,anchor_web,14000,bowl|person|vase,000000434230.jpg,images/anchor_web/14000/000000434230.png
+caa8da2fa7b0,anchor_web,16000,zebra,000000031269.jpg,images/anchor_web/16000/000000031269.png
+e295583543ca,anchor_web,16000,person|skis,000000053626.jpg,images/anchor_web/16000/000000053626.png
+2479ab396c96,anchor_web,16000,backpack|car|cell phone|person,000000100624.jpg,images/anchor_web/16000/000000100624.png
+08945991e8b6,anchor_web,16000,clock,000000173044.jpg,images/anchor_web/16000/000000173044.png
+fab6ef891f50,anchor_web,16000,backpack|bus|car|person|traffic light,000000176037.jpg,images/anchor_web/16000/000000176037.png
+8eff5663cce6,anchor_web,18000,person|surfboard,000000001490.jpg,images/anchor_web/18000/000000001490.png
+b6a8b8e65278,anchor_web,18000,banana|cake|cup|microwave|orange|oven|person|scissors|toaster,000000173008.jpg,images/anchor_web/18000/000000173008.png
+df3b13441399,anchor_web,18000,toilet,000000251065.jpg,images/anchor_web/18000/000000251065.png
+6b468f424016,anchor_web,18000,person|potted plant|vase,000000314264.jpg,images/anchor_web/18000/000000314264.png
+39cf3fff3634,anchor_web,18000,broccoli,000000386134.jpg,images/anchor_web/18000/000000386134.png
+a4a0389cf24a,anchor_web,2000,car|clock|person,000000031118.jpg,images/anchor_web/2000/000000031118.png
+eb702a1b4c87,anchor_web,2000,book|bottle|bowl|cup|microwave|oven|sink|tv|vase,000000091615.jpg,images/anchor_web/2000/000000091615.png
+27ac95a7bbba,anchor_web,2000,laptop|person|remote,000000110449.jpg,images/anchor_web/2000/000000110449.png
+e31b02e7149a,anchor_web,2000,giraffe,000000134689.jpg,images/anchor_web/2000/000000134689.png
+213e3ad3db13,anchor_web,2000,frisbee|person,000000328337.jpg,images/anchor_web/2000/000000328337.png
+d1542f60ffaf,anchor_web,20000,dog|kite|person,000000057760.jpg,images/anchor_web/20000/000000057760.png
+fb4ab9fc6ec0,anchor_web,20000,bottle|cell phone|cup|dining table|person|spoon|vase,000000345356.jpg,images/anchor_web/20000/000000345356.png
+ce5f6b504c25,anchor_web,20000,car|person|sheep|stop sign,000000369442.jpg,images/anchor_web/20000/000000369442.png
+e8d82783e262,anchor_web,20000,giraffe,000000480842.jpg,images/anchor_web/20000/000000480842.png
+cd3bcd46f8c6,anchor_web,20000,skateboard,000000544052.jpg,images/anchor_web/20000/000000544052.png
+112ec1368ad4,anchor_web,4000,boat|chair|couch|person|teddy bear|toothbrush|tv,000000092091.jpg,images/anchor_web/4000/000000092091.png
+8e7bf5af4764,anchor_web,4000,book|chair|couch|dining table|potted plant|tv|vase,000000205514.jpg,images/anchor_web/4000/000000205514.png
+feeda6d383f5,anchor_web,4000,bus|cell phone|person,000000336628.jpg,images/anchor_web/4000/000000336628.png
+d6c9b9b3e85d,anchor_web,4000,person|tie,000000476415.jpg,images/anchor_web/4000/000000476415.png
+b320e512e815,anchor_web,4000,book|chair|couch|dining table|oven|person|potted plant|vase,000000568710.jpg,images/anchor_web/4000/000000568710.png
+c70a44f9e8d4,anchor_web,6000,person|surfboard,000000006460.jpg,images/anchor_web/6000/000000006460.png
+516859a88228,anchor_web,6000,bottle|sink|toilet,000000090108.jpg,images/anchor_web/6000/000000090108.png
+c64fcac210c0,anchor_web,6000,traffic light|train,000000307598.jpg,images/anchor_web/6000/000000307598.png
+748c6a79256e,anchor_web,6000,apple|bottle|bowl|clock|cup|kite|person|vase|wine glass,000000357888.jpg,images/anchor_web/6000/000000357888.png
+5bf1d3783193,anchor_web,6000,bench|car|dog,000000365207.jpg,images/anchor_web/6000/000000365207.png
+de49daad2d28,anchor_web,8000,bowl|cat|tv,000000098839.jpg,images/anchor_web/8000/000000098839.png
+2d03189acdaa,anchor_web,8000,cell phone|person,000000117197.jpg,images/anchor_web/8000/000000117197.png
+3f4ac3dc8b1a,anchor_web,8000,handbag|person|suitcase|tv,000000201418.jpg,images/anchor_web/8000/000000201418.png
+276143787a44,anchor_web,8000,frisbee|person,000000252716.jpg,images/anchor_web/8000/000000252716.png
+67ca0dcfb28f,anchor_web,8000,bench|motorcycle,000000410878.jpg,images/anchor_web/8000/000000410878.png
+1be9b20d2572,edge_tangent,10000,book|chair|clock|dining table|microwave|person|potted plant|refrigerator|tv|vase,000000000139.jpg,images/edge_tangent/10000/000000000139.png
+221e77c0bd17,edge_tangent,10000,potted plant|vase,000000069795.jpg,images/edge_tangent/10000/000000069795.png
+198cc17bd050,edge_tangent,10000,car|frisbee|person|truck,000000200961.jpg,images/edge_tangent/10000/000000200961.png
+bac0beb2f9d4,edge_tangent,10000,airplane,000000384350.jpg,images/edge_tangent/10000/000000384350.png
+810780a9bf51,edge_tangent,10000,bottle|bowl|orange|oven|person,000000523100.jpg,images/edge_tangent/10000/000000523100.png
+bfada144ad31,edge_tangent,12000,bottle|bowl|clock|cup|refrigerator|sink|toaster,000000135561.jpg,images/edge_tangent/12000/000000135561.png
+feb9cc20e3ea,edge_tangent,12000,sheep,000000269196.jpg,images/edge_tangent/12000/000000269196.png
+d26e90f8a79a,edge_tangent,12000,backpack|bench|bicycle|car|handbag|person,000000301135.jpg,images/edge_tangent/12000/000000301135.png
+5f8e25e37404,edge_tangent,12000,car|fire hydrant|person|stop sign,000000417779.jpg,images/edge_tangent/12000/000000417779.png
+0b312caeec3e,edge_tangent,12000,cat,000000475732.jpg,images/edge_tangent/12000/000000475732.png
+047faeb3f455,edge_tangent,14000,laptop|mouse|person|potted plant,000000086582.jpg,images/edge_tangent/14000/000000086582.png
+1a99c38b4166,edge_tangent,14000,truck,000000147745.jpg,images/edge_tangent/14000/000000147745.png
+2e9a7bdbb687,edge_tangent,14000,cow,000000347664.jpg,images/edge_tangent/14000/000000347664.png
+19850b33ead4,edge_tangent,14000,bottle|handbag|person|sheep,000000559956.jpg,images/edge_tangent/14000/000000559956.png
+61046299b2af,edge_tangent,14000,bowl|chair|couch|cup|dining table|fork|knife|potted plant|spoon|vase|wine glass,000000572678.jpg,images/edge_tangent/14000/000000572678.png
+002c7156755c,edge_tangent,16000,dog|sheep,000000209613.jpg,images/edge_tangent/16000/000000209613.png
+49adffc8ba41,edge_tangent,16000,elephant,000000259625.jpg,images/edge_tangent/16000/000000259625.png
+2211c9af434c,edge_tangent,16000,boat|dog|person,000000286422.jpg,images/edge_tangent/16000/000000286422.png
+f4472c114ab0,edge_tangent,16000,clock,000000344614.jpg,images/edge_tangent/16000/000000344614.png
+07c4717dd87f,edge_tangent,16000,person|umbrella,000000493772.jpg,images/edge_tangent/16000/000000493772.png
+f79cf07ca764,edge_tangent,18000,book|couch|tv,000000104666.jpg,images/edge_tangent/18000/000000104666.png
+4d28c0de50f4,edge_tangent,18000,bed|person|tennis racket,000000200421.jpg,images/edge_tangent/18000/000000200421.png
+142e9abd2b43,edge_tangent,18000,cup|dining table|person|wine glass,000000244750.jpg,images/edge_tangent/18000/000000244750.png
+c43374670829,edge_tangent,18000,bus,000000311909.jpg,images/edge_tangent/18000/000000311909.png
+c4596f58eb56,edge_tangent,18000,person|surfboard,000000389197.jpg,images/edge_tangent/18000/000000389197.png
+79fcc5d4ee8c,edge_tangent,2000,person|tennis racket,000000223959.jpg,images/edge_tangent/2000/000000223959.png
+4a40df0e4b33,edge_tangent,2000,carrot|dining table|fork|knife|sandwich,000000250766.jpg,images/edge_tangent/2000/000000250766.png
+5c5dc8546cad,edge_tangent,2000,traffic light|train,000000440617.jpg,images/edge_tangent/2000/000000440617.png
+a59dc9e44889,edge_tangent,2000,bus|person,000000445834.jpg,images/edge_tangent/2000/000000445834.png
+538608fb11c0,edge_tangent,2000,sink|toilet,000000570736.jpg,images/edge_tangent/2000/000000570736.png
+0d33dc80f633,edge_tangent,20000,zebra,000000124975.jpg,images/edge_tangent/20000/000000124975.png
+d754a5f7a23e,edge_tangent,20000,apple|banana|bowl|dining table|fork|knife|orange,000000322959.jpg,images/edge_tangent/20000/000000322959.png
+ee675b6b0c26,edge_tangent,20000,bird,000000407518.jpg,images/edge_tangent/20000/000000407518.png
+45694676dbd2,edge_tangent,20000,kite|person|surfboard,000000477955.jpg,images/edge_tangent/20000/000000477955.png
+122c4a003208,edge_tangent,20000,person|tie,000000580197.jpg,images/edge_tangent/20000/000000580197.png
+d4910d8e7075,edge_tangent,4000,airplane|truck,000000098520.jpg,images/edge_tangent/4000/000000098520.png
+689d4f28b29b,edge_tangent,4000,clock,000000161642.jpg,images/edge_tangent/4000/000000161642.png
+6facd591778c,edge_tangent,4000,handbag|person|umbrella,000000281754.jpg,images/edge_tangent/4000/000000281754.png
+6ce604bc3a3f,edge_tangent,4000,bird,000000402519.jpg,images/edge_tangent/4000/000000402519.png
+9fa6b4db276a,edge_tangent,4000,car|horse|person,000000506656.jpg,images/edge_tangent/4000/000000506656.png
+ceb2d779a515,edge_tangent,6000,laptop|wine glass,000000016439.jpg,images/edge_tangent/6000/000000016439.png
+77258c4406dc,edge_tangent,6000,car|train,000000338986.jpg,images/edge_tangent/6000/000000338986.png
+f4eb0514b926,edge_tangent,6000,person|truck,000000401862.jpg,images/edge_tangent/6000/000000401862.png
+62ff7fa1d13f,edge_tangent,6000,car|fire hydrant|person,000000464824.jpg,images/edge_tangent/6000/000000464824.png
+7c803a3bcfb8,edge_tangent,6000,apple|bowl|chair|dining table|microwave|orange|oven|potted plant|refrigerator|sink|spoon|toaster|vase,000000540502.jpg,images/edge_tangent/6000/000000540502.png
+e63128211aed,edge_tangent,8000,person|suitcase,000000026941.jpg,images/edge_tangent/8000/000000026941.png
+875b976a0ab6,edge_tangent,8000,donut|person|tie,000000034417.jpg,images/edge_tangent/8000/000000034417.png
+58b28db21dd5,edge_tangent,8000,bird|clock,000000060363.jpg,images/edge_tangent/8000/000000060363.png
+2cbed99c3c31,edge_tangent,8000,boat|person,000000186873.jpg,images/edge_tangent/8000/000000186873.png
+17f35af63f2c,edge_tangent,8000,bench|person|potted plant,000000437514.jpg,images/edge_tangent/8000/000000437514.png
+1caf1f2adffe,flow_streamlines,10000,bowl|spoon,000000005600.jpg,images/flow_streamlines/10000/000000005600.png
+164e441cebc7,flow_streamlines,10000,person|tie,000000151657.jpg,images/flow_streamlines/10000/000000151657.png
+d5bb4ed2be8d,flow_streamlines,10000,horse,000000304291.jpg,images/flow_streamlines/10000/000000304291.png
+23381e9b4c6f,flow_streamlines,10000,horse,000000460682.jpg,images/flow_streamlines/10000/000000460682.png
+503337b97a1c,flow_streamlines,10000,bench|bird|car|handbag|person,000000511076.jpg,images/flow_streamlines/10000/000000511076.png
+58e867f00179,flow_streamlines,12000,bench|person|skateboard,000000013546.jpg,images/flow_streamlines/12000/000000013546.png
+3e0abd47308b,flow_streamlines,12000,apple|bowl|carrot|chair|cup|dining table|orange|person|sandwich|spoon,000000273711.jpg,images/flow_streamlines/12000/000000273711.png
+36a330d0afa9,flow_streamlines,12000,donut,000000328117.jpg,images/flow_streamlines/12000/000000328117.png
+2583f70e6aca,flow_streamlines,12000,person|sports ball|tennis racket,000000388215.jpg,images/flow_streamlines/12000/000000388215.png
+ebed51da62bd,flow_streamlines,12000,car|train,000000488664.jpg,images/flow_streamlines/12000/000000488664.png
+fcda45e88aa4,flow_streamlines,14000,cake|chair|dining table|person|potted plant,000000054628.jpg,images/flow_streamlines/14000/000000054628.png
+c7b9cb3fb169,flow_streamlines,14000,bus|car,000000201934.jpg,images/flow_streamlines/14000/000000201934.png
+e275405d6206,flow_streamlines,14000,horse|person,000000331280.jpg,images/flow_streamlines/14000/000000331280.png
+701a855cb616,flow_streamlines,14000,person|snowboard,000000350405.jpg,images/flow_streamlines/14000/000000350405.png
+12f9100e896b,flow_streamlines,14000,book|potted plant|vase,000000512403.jpg,images/flow_streamlines/14000/000000512403.png
+e76137b80802,flow_streamlines,16000,pizza,000000075456.jpg,images/flow_streamlines/16000/000000075456.png
+ada82ca2cc06,flow_streamlines,16000,bus|car|person,000000084170.jpg,images/flow_streamlines/16000/000000084170.png
+53548fe938e2,flow_streamlines,16000,clock|person|tennis racket,000000216296.jpg,images/flow_streamlines/16000/000000216296.png
+fb766bdc3148,flow_streamlines,16000,bed|book|bottle|cell phone|laptop,000000222299.jpg,images/flow_streamlines/16000/000000222299.png
+aac1af425123,flow_streamlines,16000,airplane,000000456865.jpg,images/flow_streamlines/16000/000000456865.png
+8b4ba3bc56e3,flow_streamlines,18000,baseball bat|baseball glove|bench|person,000000098287.jpg,images/flow_streamlines/18000/000000098287.png
+bd7f58b598d1,flow_streamlines,18000,elephant,000000314294.jpg,images/flow_streamlines/18000/000000314294.png
+b1be5e75e73d,flow_streamlines,18000,sheep,000000397639.jpg,images/flow_streamlines/18000/000000397639.png
+1d71003e79e3,flow_streamlines,18000,bench|bowl|chair|couch|dining table|person|wine glass,000000404678.jpg,images/flow_streamlines/18000/000000404678.png
+89c903025a01,flow_streamlines,18000,bicycle|bus|handbag|person,000000563604.jpg,images/flow_streamlines/18000/000000563604.png
+d2127b854a84,flow_streamlines,2000,book|bowl|cell phone|cup|dining table|handbag|person|spoon,000000157767.jpg,images/flow_streamlines/2000/000000157767.png
+83ead64fbcf9,flow_streamlines,2000,bowl|cake|cup|dining table|spoon,000000182417.jpg,images/flow_streamlines/2000/000000182417.png
+995b54adc6f9,flow_streamlines,2000,elephant,000000383921.jpg,images/flow_streamlines/2000/000000383921.png
+13ad587e24b7,flow_streamlines,2000,microwave|oven|refrigerator|sink,000000445846.jpg,images/flow_streamlines/2000/000000445846.png
+d67fa1fc4a4c,flow_streamlines,2000,banana|dining table,000000457262.jpg,images/flow_streamlines/2000/000000457262.png
+1a059021fd13,flow_streamlines,20000,broccoli,000000061658.jpg,images/flow_streamlines/20000/000000061658.png
+569de2a9952f,flow_streamlines,20000,cell phone|person|remote,000000082688.jpg,images/flow_streamlines/20000/000000082688.png
+e978a17c236f,flow_streamlines,20000,car|stop sign|truck,000000222094.jpg,images/flow_streamlines/20000/000000222094.png
+606dcf58e91f,flow_streamlines,20000,baseball bat|person,000000427077.jpg,images/flow_streamlines/20000/000000427077.png
+238340274f94,flow_streamlines,20000,bus|person,000000455085.jpg,images/flow_streamlines/20000/000000455085.png
+06112751d6de,flow_streamlines,4000,car|handbag|person,000000278749.jpg,images/flow_streamlines/4000/000000278749.png
+c7a40d3fd43e,flow_streamlines,4000,person|surfboard,000000359677.jpg,images/flow_streamlines/4000/000000359677.png
+4251c520dfaf,flow_streamlines,4000,backpack|person|skis,000000414170.jpg,images/flow_streamlines/4000/000000414170.png
+81b7b2a61ce9,flow_streamlines,4000,bottle|bowl|cup|oven|person|spoon,000000455597.jpg,images/flow_streamlines/4000/000000455597.png
+63faf05a604f,flow_streamlines,4000,boat|dog,000000532575.jpg,images/flow_streamlines/4000/000000532575.png
+f29f37b255bf,flow_streamlines,6000,bed|chair|dining table,000000001993.jpg,images/flow_streamlines/6000/000000001993.png
+2f22ed23f411,flow_streamlines,6000,car|person|tie,000000025393.jpg,images/flow_streamlines/6000/000000025393.png
+65de72e67e9b,flow_streamlines,6000,sheep,000000044699.jpg,images/flow_streamlines/6000/000000044699.png
+5d4c84ac2f1e,flow_streamlines,6000,person|snowboard,000000109992.jpg,images/flow_streamlines/6000/000000109992.png
+75155f8a7a1e,flow_streamlines,6000,bear,000000110972.jpg,images/flow_streamlines/6000/000000110972.png
+1482b2ceb64d,flow_streamlines,8000,teddy bear,000000109827.jpg,images/flow_streamlines/8000/000000109827.png
+67443ed54784,flow_streamlines,8000,tie,000000423944.jpg,images/flow_streamlines/8000/000000423944.png
+a368cf5a8bba,flow_streamlines,8000,dining table|wine glass,000000506279.jpg,images/flow_streamlines/8000/000000506279.png
+cd2920dfd655,flow_streamlines,8000,car|traffic light,000000553339.jpg,images/flow_streamlines/8000/000000553339.png
+80a79c8f3314,flow_streamlines,8000,person|surfboard,000000574520.jpg,images/flow_streamlines/8000/000000574520.png
+fa7c19472134,greedy_error,10000,apple|banana|bowl|oven|person,000000158660.jpg,images/greedy_error/10000/000000158660.png
+806e723d6fcc,greedy_error,10000,sink|toilet,000000201775.jpg,images/greedy_error/10000/000000201775.png
+4bc77f0ba2ee,greedy_error,10000,person|sports ball,000000225405.jpg,images/greedy_error/10000/000000225405.png
+ae5c2d9fd2a4,greedy_error,10000,bed|cat|laptop|person,000000290843.jpg,images/greedy_error/10000/000000290843.png
+ca44ba5d34d1,greedy_error,10000,giraffe,000000392933.jpg,images/greedy_error/10000/000000392933.png
+f83ec7226715,greedy_error,12000,person|teddy bear,000000050638.jpg,images/greedy_error/12000/000000050638.png
+c9c23e044412,greedy_error,12000,bowl|clock|person|pizza,000000258883.jpg,images/greedy_error/12000/000000258883.png
+e9da85ec7c5c,greedy_error,12000,giraffe,000000344059.jpg,images/greedy_error/12000/000000344059.png
+aca69669368c,greedy_error,12000,scissors,000000348012.jpg,images/greedy_error/12000/000000348012.png
+86e6711ac5e7,greedy_error,12000,elephant,000000565624.jpg,images/greedy_error/12000/000000565624.png
+3f8b208da431,greedy_error,14000,cell phone,000000022623.jpg,images/greedy_error/14000/000000022623.png
+999bdd76a1d2,greedy_error,14000,potted plant|toilet,000000042276.jpg,images/greedy_error/14000/000000042276.png
+ccda6b45030b,greedy_error,14000,car|person|sports ball|truck,000000188296.jpg,images/greedy_error/14000/000000188296.png
+4a6bd48b11da,greedy_error,14000,cow,000000235857.jpg,images/greedy_error/14000/000000235857.png
+a4acd7f64a5a,greedy_error,14000,chair|clock|couch|cup|dining table|keyboard|laptop|mouse|person|tv,000000435208.jpg,images/greedy_error/14000/000000435208.png
+07ff37aa7110,greedy_error,16000,chair|dining table|fork|knife|vase|wine glass,000000007818.jpg,images/greedy_error/16000/000000007818.png
+25ff9619e056,greedy_error,16000,zebra,000000172977.jpg,images/greedy_error/16000/000000172977.png
+1c19547e0443,greedy_error,16000,person|snowboard,000000193429.jpg,images/greedy_error/16000/000000193429.png
+d6bb06aa7da1,greedy_error,16000,chair|person|sports ball|tennis racket,000000403122.jpg,images/greedy_error/16000/000000403122.png
+c2c1d6cf2cb4,greedy_error,16000,boat|cow|elephant|person|sheep,000000435206.jpg,images/greedy_error/16000/000000435206.png
+7a875593e5e6,greedy_error,18000,chair|dining table|knife|person|skateboard|zebra,000000025096.jpg,images/greedy_error/18000/000000025096.png
+c9a51fc145d8,greedy_error,18000,person|skateboard,000000121591.jpg,images/greedy_error/18000/000000121591.png
+605847a945bc,greedy_error,18000,person|skis,000000343453.jpg,images/greedy_error/18000/000000343453.png
+02072f98f839,greedy_error,18000,car|motorcycle,000000456394.jpg,images/greedy_error/18000/000000456394.png
+7897b421f020,greedy_error,18000,boat|car|truck,000000513181.jpg,images/greedy_error/18000/000000513181.png
+631fbe2c7c60,greedy_error,2000,banana|cake|cell phone|chair|keyboard|laptop|mouse|person,000000059598.jpg,images/greedy_error/2000/000000059598.png
+e0a5cf6022c0,greedy_error,2000,person|tennis racket,000000143572.jpg,images/greedy_error/2000/000000143572.png
+f6f41300637f,greedy_error,2000,,000000278006.jpg,images/greedy_error/2000/000000278006.png
+e438de7ed329,greedy_error,2000,person|teddy bear,000000286660.jpg,images/greedy_error/2000/000000286660.png
+15137d17659e,greedy_error,2000,bed|cat|dog,000000401991.jpg,images/greedy_error/2000/000000401991.png
+fb27f1ae0c60,greedy_error,20000,airplane|person|truck,000000109900.jpg,images/greedy_error/20000/000000109900.png
+f815cdd3fe75,greedy_error,20000,boat|kite|person,000000199395.jpg,images/greedy_error/20000/000000199395.png
+87a30f82466f,greedy_error,20000,dog|handbag|person,000000295478.jpg,images/greedy_error/20000/000000295478.png
+8e7a2180706e,greedy_error,20000,sink,000000368940.jpg,images/greedy_error/20000/000000368940.png
+0629882061d9,greedy_error,20000,dining table|donut,000000526197.jpg,images/greedy_error/20000/000000526197.png
+9842629cc85b,greedy_error,4000,car|person|tie,000000058539.jpg,images/greedy_error/4000/000000058539.png
+e1e3aee69d1e,greedy_error,4000,banana|bottle,000000079651.jpg,images/greedy_error/4000/000000079651.png
+35860416894c,greedy_error,4000,orange,000000386277.jpg,images/greedy_error/4000/000000386277.png
+705f71c0c4d9,greedy_error,4000,bench|person|sports ball|tennis racket,000000402615.jpg,images/greedy_error/4000/000000402615.png
+d86b0ff2a7dc,greedy_error,4000,donut|person,000000439426.jpg,images/greedy_error/4000/000000439426.png
+fc38a4b6a806,greedy_error,6000,cake|chair|fork|person,000000162092.jpg,images/greedy_error/6000/000000162092.png
+cb0a0eea7427,greedy_error,6000,refrigerator,000000349837.jpg,images/greedy_error/6000/000000349837.png
+a7f6ffd1c93b,greedy_error,6000,person|tennis racket,000000394559.jpg,images/greedy_error/6000/000000394559.png
+c1f52e6749dc,greedy_error,6000,person|skis,000000473121.jpg,images/greedy_error/6000/000000473121.png
+dea9d98d26c1,greedy_error,6000,,000000481404.jpg,images/greedy_error/6000/000000481404.png
+366836717c95,greedy_error,8000,bed,000000193494.jpg,images/greedy_error/8000/000000193494.png
+696ed8a484f5,greedy_error,8000,bear,000000217948.jpg,images/greedy_error/8000/000000217948.png
+0675bfe4f25f,greedy_error,8000,chair|cup|dining table|oven|refrigerator,000000507081.jpg,images/greedy_error/8000/000000507081.png
+b9dc7ca5217b,greedy_error,8000,chair|couch|dining table|person|tie|vase,000000546964.jpg,images/greedy_error/8000/000000546964.png
+91ca7cbd9e87,greedy_error,8000,bottle|person|skateboard,000000572620.jpg,images/greedy_error/8000/000000572620.png
+7a394fa904e7,greedy_residual,10000,bowl|teddy bear|truck,000000211120.jpg,images/greedy_residual/10000/000000211120.png
+19b107c2469c,greedy_residual,10000,book|chair|couch|potted plant|remote,000000344621.jpg,images/greedy_residual/10000/000000344621.png
+e365d2fc0956,greedy_residual,10000,cup|dog|motorcycle,000000472375.jpg,images/greedy_residual/10000/000000472375.png
+88a41b0a2ac2,greedy_residual,10000,chair|person|pizza,000000473237.jpg,images/greedy_residual/10000/000000473237.png
+0492ca9f599e,greedy_residual,10000,airplane|backpack|bus|handbag|person|suitcase|truck,000000524850.jpg,images/greedy_residual/10000/000000524850.png
+a34f04ae5757,greedy_residual,12000,chair|person|remote,000000156924.jpg,images/greedy_residual/12000/000000156924.png
+f66431eff1e9,greedy_residual,12000,person|skateboard,000000161879.jpg,images/greedy_residual/12000/000000161879.png
+06b653f5ee40,greedy_residual,12000,dining table|person|remote|wine glass,000000185890.jpg,images/greedy_residual/12000/000000185890.png
+d91afc863214,greedy_residual,12000,bus,000000516804.jpg,images/greedy_residual/12000/000000516804.png
+d247c03dab1c,greedy_residual,12000,zebra,000000546011.jpg,images/greedy_residual/12000/000000546011.png
+2f4c9fedca7d,greedy_residual,14000,apple|bowl|carrot|knife|orange|refrigerator|sink,000000078266.jpg,images/greedy_residual/14000/000000078266.png
+e7b4c5dc1f72,greedy_residual,14000,dog|frisbee|person,000000149568.jpg,images/greedy_residual/14000/000000149568.png
+c99f29870b86,greedy_residual,14000,,000000320706.jpg,images/greedy_residual/14000/000000320706.png
+94c722d543f8,greedy_residual,14000,backpack|bicycle|motorcycle|person,000000356387.jpg,images/greedy_residual/14000/000000356387.png
+93a6605179ca,greedy_residual,14000,clock,000000482487.jpg,images/greedy_residual/14000/000000482487.png
+cbf0a84093f7,greedy_residual,16000,bear,000000020247.jpg,images/greedy_residual/16000/000000020247.png
+656bae944002,greedy_residual,16000,apple|bowl|chair|cup|dining table|sink|tv,000000034873.jpg,images/greedy_residual/16000/000000034873.png
+85b925c3c39b,greedy_residual,16000,teddy bear,000000080413.jpg,images/greedy_residual/16000/000000080413.png
+9fa3a9800d51,greedy_residual,16000,cake|chair|cup|knife|person|wine glass,000000092939.jpg,images/greedy_residual/16000/000000092939.png
+f3e70627c8c0,greedy_residual,16000,chair|person|sports ball|tennis racket,000000213830.jpg,images/greedy_residual/16000/000000213830.png
+cd408ce19e11,greedy_residual,18000,bowl|oven,000000138856.jpg,images/greedy_residual/18000/000000138856.png
+c5c6bb305b4a,greedy_residual,18000,bench|person|tie|traffic light|train,000000323751.jpg,images/greedy_residual/18000/000000323751.png
+de15e5a38693,greedy_residual,18000,bed|book|chair|couch,000000419601.jpg,images/greedy_residual/18000/000000419601.png
+a32268434f9b,greedy_residual,18000,cell phone|person,000000433980.jpg,images/greedy_residual/18000/000000433980.png
+50b0799a5d85,greedy_residual,18000,bottle|hot dog|person,000000523807.jpg,images/greedy_residual/18000/000000523807.png
+79086104e393,greedy_residual,2000,person|snowboard,000000217872.jpg,images/greedy_residual/2000/000000217872.png
+9f183c986566,greedy_residual,2000,bowl|chair|dining table|fork|knife|potted plant|spoon,000000237517.jpg,images/greedy_residual/2000/000000237517.png
+3d5699ce2b13,greedy_residual,2000,bench|chair|dining table|umbrella,000000416991.jpg,images/greedy_residual/2000/000000416991.png
+7a805b3ea741,greedy_residual,2000,sandwich|spoon,000000465430.jpg,images/greedy_residual/2000/000000465430.png
+0cd58e07fc91,greedy_residual,2000,car|motorcycle,000000527220.jpg,images/greedy_residual/2000/000000527220.png
+2b506a6d6c04,greedy_residual,20000,chair|cup|dining table|person|umbrella,000000180487.jpg,images/greedy_residual/20000/000000180487.png
+880d19f89d4e,greedy_residual,20000,book|cake|oven|person,000000211825.jpg,images/greedy_residual/20000/000000211825.png
+49399397c717,greedy_residual,20000,person|tennis racket,000000271402.jpg,images/greedy_residual/20000/000000271402.png
+fe3c8d4c20e3,greedy_residual,20000,cake|oven,000000344795.jpg,images/greedy_residual/20000/000000344795.png
+c550ebbe2ac5,greedy_residual,20000,bed|cup,000000384651.jpg,images/greedy_residual/20000/000000384651.png
+389495921432,greedy_residual,4000,person|surfboard,000000142971.jpg,images/greedy_residual/4000/000000142971.png
+34265e8202a1,greedy_residual,4000,banana|chair,000000163951.jpg,images/greedy_residual/4000/000000163951.png
+7bb368ea7b84,greedy_residual,4000,bottle|cell phone|person|umbrella,000000228214.jpg,images/greedy_residual/4000/000000228214.png
+7b18e06f5484,greedy_residual,4000,traffic light,000000245102.jpg,images/greedy_residual/4000/000000245102.png
+6c2c373e226b,greedy_residual,4000,bed|book|cat|person,000000458255.jpg,images/greedy_residual/4000/000000458255.png
+058915cf011b,greedy_residual,6000,car|frisbee|person,000000127263.jpg,images/greedy_residual/6000/000000127263.png
+d211a2003117,greedy_residual,6000,person|skateboard,000000362520.jpg,images/greedy_residual/6000/000000362520.png
+7dd7c96eef74,greedy_residual,6000,train,000000364587.jpg,images/greedy_residual/6000/000000364587.png
+726fca8c57b2,greedy_residual,6000,banana,000000466835.jpg,images/greedy_residual/6000/000000466835.png
+4bb36fc34797,greedy_residual,6000,couch|dining table|remote,000000546325.jpg,images/greedy_residual/6000/000000546325.png
+6384822b0a6a,greedy_residual,8000,cake,000000098633.jpg,images/greedy_residual/8000/000000098633.png
+d18ec6bfb863,greedy_residual,8000,frisbee|person,000000283520.jpg,images/greedy_residual/8000/000000283520.png
+cb66c2c10955,greedy_residual,8000,boat|surfboard,000000377882.jpg,images/greedy_residual/8000/000000377882.png
+d33f6e0bae74,greedy_residual,8000,person|sports ball|tennis racket,000000548246.jpg,images/greedy_residual/8000/000000548246.png
+956b65593bb8,greedy_residual,8000,bench|person|skateboard,000000559160.jpg,images/greedy_residual/8000/000000559160.png
+ec3a66089ab5,quadtree_hatch,10000,person|sports ball|tennis racket,000000039551.jpg,images/quadtree_hatch/10000/000000039551.png
+f36811bf4c1d,quadtree_hatch,10000,bird,000000166259.jpg,images/quadtree_hatch/10000/000000166259.png
+6b70de07b7c5,quadtree_hatch,10000,banana|bowl|orange,000000191761.jpg,images/quadtree_hatch/10000/000000191761.png
+8e0731e5e036,quadtree_hatch,10000,keyboard|laptop|mouse|person|tv,000000426241.jpg,images/quadtree_hatch/10000/000000426241.png
+f43f6f022beb,quadtree_hatch,10000,elephant,000000564133.jpg,images/quadtree_hatch/10000/000000564133.png
+3521d7fd6a2e,quadtree_hatch,12000,kite|person,000000077460.jpg,images/quadtree_hatch/12000/000000077460.png
+3f909b28f3d9,quadtree_hatch,12000,person|tennis racket,000000090284.jpg,images/quadtree_hatch/12000/000000090284.png
+fe9771b99249,quadtree_hatch,12000,giraffe,000000112634.jpg,images/quadtree_hatch/12000/000000112634.png
+e81007d36785,quadtree_hatch,12000,baseball bat|person,000000404923.jpg,images/quadtree_hatch/12000/000000404923.png
+47cc6d89f380,quadtree_hatch,12000,boat|bottle|person|truck,000000448256.jpg,images/quadtree_hatch/12000/000000448256.png
+8646b0b99a32,quadtree_hatch,14000,zebra,000000064499.jpg,images/quadtree_hatch/14000/000000064499.png
+83c95f6788b1,quadtree_hatch,14000,keyboard|laptop|person,000000181499.jpg,images/quadtree_hatch/14000/000000181499.png
+105b84887263,quadtree_hatch,14000,boat|person|surfboard,000000312489.jpg,images/quadtree_hatch/14000/000000312489.png
+00624b43b9f6,quadtree_hatch,14000,clock,000000468233.jpg,images/quadtree_hatch/14000/000000468233.png
+92338a55f569,quadtree_hatch,14000,bench|person,000000537153.jpg,images/quadtree_hatch/14000/000000537153.png
+6266f48c1448,quadtree_hatch,16000,fire hydrant|person|traffic light,000000017905.jpg,images/quadtree_hatch/16000/000000017905.png
+4e76e1d48192,quadtree_hatch,16000,car|giraffe|zebra,000000059386.jpg,images/quadtree_hatch/16000/000000059386.png
+bd4c1809c554,quadtree_hatch,16000,apple|carrot|fork,000000177714.jpg,images/quadtree_hatch/16000/000000177714.png
+c2ac0c8afff8,quadtree_hatch,16000,giraffe,000000229753.jpg,images/quadtree_hatch/16000/000000229753.png
+349507173378,quadtree_hatch,16000,backpack|chair|person|umbrella,000000388846.jpg,images/quadtree_hatch/16000/000000388846.png
+8e6e92e15f19,quadtree_hatch,18000,bus|car|person,000000017627.jpg,images/quadtree_hatch/18000/000000017627.png
+6ab21c703d43,quadtree_hatch,18000,keyboard|laptop|mouse|tv,000000148620.jpg,images/quadtree_hatch/18000/000000148620.png
+8a12228a4d08,quadtree_hatch,18000,cell phone|person|remote,000000168974.jpg,images/quadtree_hatch/18000/000000168974.png
+71776bb5eadd,quadtree_hatch,18000,bench|fire hydrant,000000372203.jpg,images/quadtree_hatch/18000/000000372203.png
+e75ede41f743,quadtree_hatch,18000,bus|car|motorcycle|person|traffic light,000000380706.jpg,images/quadtree_hatch/18000/000000380706.png
+35871a0abd4c,quadtree_hatch,2000,car|person|truck,000000155341.jpg,images/quadtree_hatch/2000/000000155341.png
+9e02d9f14ffa,quadtree_hatch,2000,person|snowboard,000000425906.jpg,images/quadtree_hatch/2000/000000425906.png
+619df121aa39,quadtree_hatch,2000,bottle|dining table|fork|sandwich|vase,000000527784.jpg,images/quadtree_hatch/2000/000000527784.png
+0f6d71c0a990,quadtree_hatch,2000,bottle|bowl|chair|cup|dining table|fork|handbag|knife|person|spoon|wine glass,000000546219.jpg,images/quadtree_hatch/2000/000000546219.png
+7b4ca2c83058,quadtree_hatch,2000,bowl|cake|carrot|orange,000000567898.jpg,images/quadtree_hatch/2000/000000567898.png
+53e57fa75fa3,quadtree_hatch,20000,person|skateboard,000000072281.jpg,images/quadtree_hatch/20000/000000072281.png
+aff43b6a25b8,quadtree_hatch,20000,dining table|potted plant|vase,000000140439.jpg,images/quadtree_hatch/20000/000000140439.png
+895108a9f1b8,quadtree_hatch,20000,airplane,000000208901.jpg,images/quadtree_hatch/20000/000000208901.png
+c8f128d36151,quadtree_hatch,20000,train,000000231169.jpg,images/quadtree_hatch/20000/000000231169.png
+4454edb7d836,quadtree_hatch,20000,bowl|chair|couch|tv|vase,000000322895.jpg,images/quadtree_hatch/20000/000000322895.png
+233b2c7504af,quadtree_hatch,4000,backpack|bicycle|motorcycle|person,000000038829.jpg,images/quadtree_hatch/4000/000000038829.png
+f1f62c2e4665,quadtree_hatch,4000,apple|orange|person,000000359833.jpg,images/quadtree_hatch/4000/000000359833.png
+c38ff3db72f6,quadtree_hatch,4000,banana|bicycle|person,000000378515.jpg,images/quadtree_hatch/4000/000000378515.png
+5e10272469fb,quadtree_hatch,4000,dog,000000392818.jpg,images/quadtree_hatch/4000/000000392818.png
+fcff3b49841f,quadtree_hatch,4000,book|person|remote,000000400161.jpg,images/quadtree_hatch/4000/000000400161.png
+65359dad686c,quadtree_hatch,6000,bowl|person|tie,000000020333.jpg,images/quadtree_hatch/6000/000000020333.png
+18da76a167c8,quadtree_hatch,6000,cup|keyboard|laptop|mouse|person|potted plant|spoon|tv,000000131138.jpg,images/quadtree_hatch/6000/000000131138.png
+b2469e6b31e4,quadtree_hatch,6000,bus|car,000000147223.jpg,images/quadtree_hatch/6000/000000147223.png
+d00bacb43475,quadtree_hatch,6000,person|remote|tv,000000172946.jpg,images/quadtree_hatch/6000/000000172946.png
+a30617688b38,quadtree_hatch,6000,dog|person,000000253386.jpg,images/quadtree_hatch/6000/000000253386.png
+b3d0e44dc761,quadtree_hatch,8000,motorcycle|person,000000226662.jpg,images/quadtree_hatch/8000/000000226662.png
+7983e80a9dc0,quadtree_hatch,8000,horse|person|sheep,000000263966.jpg,images/quadtree_hatch/8000/000000263966.png
+5bbdc981fe95,quadtree_hatch,8000,car|cell phone|chair|keyboard|laptop|mouse|remote|tv,000000301421.jpg,images/quadtree_hatch/8000/000000301421.png
+94c03cc43d62,quadtree_hatch,8000,bottle|potted plant|sink|toilet,000000306733.jpg,images/quadtree_hatch/8000/000000306733.png
+f403c0a86372,quadtree_hatch,8000,car|kite|person,000000433515.jpg,images/quadtree_hatch/8000/000000433515.png
+88b6659da594,radon_peel,10000,airplane|car|truck,000000052412.jpg,images/radon_peel/10000/000000052412.png
+024142aa4c4a,radon_peel,10000,baseball glove|person,000000162415.jpg,images/radon_peel/10000/000000162415.png
+4fff57c1b953,radon_peel,10000,cow,000000219440.jpg,images/radon_peel/10000/000000219440.png
+99210b3c729e,radon_peel,10000,fire hydrant,000000255718.jpg,images/radon_peel/10000/000000255718.png
+948bec2c83db,radon_peel,10000,backpack|handbag|motorcycle|person,000000291791.jpg,images/radon_peel/10000/000000291791.png
+b1137074d7c1,radon_peel,12000,baseball glove|person,000000130579.jpg,images/radon_peel/12000/000000130579.png
+6e42d41a6d57,radon_peel,12000,couch|dog|person,000000367195.jpg,images/radon_peel/12000/000000367195.png
+f7af3e0599b2,radon_peel,12000,bowl|cat|oven,000000407960.jpg,images/radon_peel/12000/000000407960.png
+dd1b4387fcbf,radon_peel,12000,bicycle|car|handbag|person|stop sign|traffic light|umbrella,000000413689.jpg,images/radon_peel/12000/000000413689.png
+ffef2d9c6bb8,radon_peel,12000,clock|couch|person|remote|surfboard,000000512657.jpg,images/radon_peel/12000/000000512657.png
+6d1cf5a54d1e,radon_peel,14000,hot dog|person,000000148662.jpg,images/radon_peel/14000/000000148662.png
+f2d61b4f8f9b,radon_peel,14000,horse|person,000000353051.jpg,images/radon_peel/14000/000000353051.png
+39c729c132a9,radon_peel,14000,dog|person|surfboard,000000462728.jpg,images/radon_peel/14000/000000462728.png
+8a83da672ec5,radon_peel,14000,banana|person,000000550714.jpg,images/radon_peel/14000/000000550714.png
+b434d4627be6,radon_peel,14000,clock|elephant,000000565989.jpg,images/radon_peel/14000/000000565989.png
+fb18d20965f4,radon_peel,16000,car|traffic light,000000093154.jpg,images/radon_peel/16000/000000093154.png
+09af5546d61c,radon_peel,16000,airplane,000000101787.jpg,images/radon_peel/16000/000000101787.png
+c157bc178ecf,radon_peel,16000,apple|bowl|cup|fork|knife|orange|person|spoon,000000110999.jpg,images/radon_peel/16000/000000110999.png
+b81742b55045,radon_peel,16000,person|train,000000198510.jpg,images/radon_peel/16000/000000198510.png
+39d8bd6afbea,radon_peel,16000,vase,000000249025.jpg,images/radon_peel/16000/000000249025.png
+232c04c93bec,radon_peel,18000,chair|hot dog|person,000000018193.jpg,images/radon_peel/18000/000000018193.png
+142bd5578d8c,radon_peel,18000,bottle|cup|sink|toilet,000000062025.jpg,images/radon_peel/18000/000000062025.png
+7f1c343f77bb,radon_peel,18000,bench|parking meter,000000203488.jpg,images/radon_peel/18000/000000203488.png
+44f7cbbd3abd,radon_peel,18000,chair|horse|person,000000441442.jpg,images/radon_peel/18000/000000441442.png
+e047a843109a,radon_peel,18000,person|skis,000000509014.jpg,images/radon_peel/18000/000000509014.png
+58c7ae962d22,radon_peel,2000,person|skis,000000041990.jpg,images/radon_peel/2000/000000041990.png
+e66fcc124919,radon_peel,2000,spoon,000000127494.jpg,images/radon_peel/2000/000000127494.png
+47caecb8006e,radon_peel,2000,bicycle|bus|car|motorcycle|person|traffic light,000000350023.jpg,images/radon_peel/2000/000000350023.png
+8b8bd4e68e5a,radon_peel,2000,bottle|elephant|handbag|person,000000369037.jpg,images/radon_peel/2000/000000369037.png
+0810fbaf37e3,radon_peel,2000,fire hydrant,000000580757.jpg,images/radon_peel/2000/000000580757.png
+d3c13b04a5fb,radon_peel,20000,person|skis,000000038210.jpg,images/radon_peel/20000/000000038210.png
+f36f359d7ee0,radon_peel,20000,bird|cat,000000117374.jpg,images/radon_peel/20000/000000117374.png
+b70d6e94a71b,radon_peel,20000,boat|person,000000239274.jpg,images/radon_peel/20000/000000239274.png
+067b724d74fe,radon_peel,20000,cake|cup|dining table|spoon,000000450100.jpg,images/radon_peel/20000/000000450100.png
+885c334eec3c,radon_peel,20000,zebra,000000504439.jpg,images/radon_peel/20000/000000504439.png
+25e3dee52294,radon_peel,4000,book|laptop|person|tie,000000022371.jpg,images/radon_peel/4000/000000022371.png
+fd07c8cc73f1,radon_peel,4000,person|skis,000000136334.jpg,images/radon_peel/4000/000000136334.png
+0e04ca26dc6b,radon_peel,4000,bottle|bowl|dining table|fork|person|pizza|spoon|wine glass,000000385029.jpg,images/radon_peel/4000/000000385029.png
+0a0935b0b5f9,radon_peel,4000,cat|potted plant,000000416170.jpg,images/radon_peel/4000/000000416170.png
+3528980b01cc,radon_peel,4000,,000000536343.jpg,images/radon_peel/4000/000000536343.png
+92f06ff16f03,radon_peel,6000,teddy bear,000000073118.jpg,images/radon_peel/6000/000000073118.png
+c1f8dc79897d,radon_peel,6000,baseball bat|baseball glove|chair|person|sports ball,000000160864.jpg,images/radon_peel/6000/000000160864.png
+afe30ad09a9c,radon_peel,6000,cell phone|keyboard|mouse|tv,000000366225.jpg,images/radon_peel/6000/000000366225.png
+cb309260e6ad,radon_peel,6000,book|chair|couch|cup|potted plant|tv,000000405970.jpg,images/radon_peel/6000/000000405970.png
+b100c08faabd,radon_peel,6000,chair|dining table|person|tie,000000460683.jpg,images/radon_peel/6000/000000460683.png
+e55acb6da8c8,radon_peel,8000,keyboard|mouse,000000068765.jpg,images/radon_peel/8000/000000068765.png
+27673f87420e,radon_peel,8000,person|surfboard,000000074200.jpg,images/radon_peel/8000/000000074200.png
+19d867c9c40b,radon_peel,8000,car|oven,000000111036.jpg,images/radon_peel/8000/000000111036.png
+97173a9af6b4,radon_peel,8000,sink|toilet,000000389804.jpg,images/radon_peel/8000/000000389804.png
+98227e3b61c1,radon_peel,8000,person|sports ball,000000577864.jpg,images/radon_peel/8000/000000577864.png
+875ac9ae877b,scanline_dashes,10000,boat,000000079837.jpg,images/scanline_dashes/10000/000000079837.png
+8b9386c38972,scanline_dashes,10000,person|sports ball|tennis racket,000000085772.jpg,images/scanline_dashes/10000/000000085772.png
+29b53c1d0932,scanline_dashes,10000,clock,000000217425.jpg,images/scanline_dashes/10000/000000217425.png
+e5efc5bc394f,scanline_dashes,10000,keyboard|mouse,000000335658.jpg,images/scanline_dashes/10000/000000335658.png
+fe8c5233b1b3,scanline_dashes,10000,apple|car|orange|potted plant,000000386210.jpg,images/scanline_dashes/10000/000000386210.png
+eb6575afce26,scanline_dashes,12000,bicycle|bus|cell phone|person,000000076416.jpg,images/scanline_dashes/12000/000000076416.png
+11b1fbe51ade,scanline_dashes,12000,bottle|cake|spoon,000000089670.jpg,images/scanline_dashes/12000/000000089670.png
+f19d51805a11,scanline_dashes,12000,cat|sink,000000209747.jpg,images/scanline_dashes/12000/000000209747.png
+acb4329bc29a,scanline_dashes,12000,bicycle|bus|car|person,000000210273.jpg,images/scanline_dashes/12000/000000210273.png
+e0b4389f503a,scanline_dashes,12000,book|cup|keyboard|laptop|mouse,000000215778.jpg,images/scanline_dashes/12000/000000215778.png
+9b48adb4bb62,scanline_dashes,14000,chair|person|remote,000000075612.jpg,images/scanline_dashes/14000/000000075612.png
+3714b8fbb9fb,scanline_dashes,14000,bicycle|handbag|motorcycle|person|truck,000000142324.jpg,images/scanline_dashes/14000/000000142324.png
+7ef1baf5c34b,scanline_dashes,14000,banana|bottle|bowl|microwave|person|refrigerator|vase,000000425226.jpg,images/scanline_dashes/14000/000000425226.png
+bdd3ba17c3b1,scanline_dashes,14000,bear,000000547519.jpg,images/scanline_dashes/14000/000000547519.png
+606a70a7ca46,scanline_dashes,14000,backpack|motorcycle|person,000000551794.jpg,images/scanline_dashes/14000/000000551794.png
+3d1215544043,scanline_dashes,16000,bed|chair,000000213422.jpg,images/scanline_dashes/16000/000000213422.png
+399acaaf8045,scanline_dashes,16000,cow|horse,000000298697.jpg,images/scanline_dashes/16000/000000298697.png
+19aaaebfd389,scanline_dashes,16000,person|skateboard,000000404249.jpg,images/scanline_dashes/16000/000000404249.png
+b3d8bbd84ec9,scanline_dashes,16000,backpack|bicycle|person|skateboard,000000439854.jpg,images/scanline_dashes/16000/000000439854.png
+f7bf3789c67e,scanline_dashes,16000,stop sign|traffic light,000000501023.jpg,images/scanline_dashes/16000/000000501023.png
+ee1e6538120f,scanline_dashes,18000,vase,000000051326.jpg,images/scanline_dashes/18000/000000051326.png
+bd81bebdb4fe,scanline_dashes,18000,bottle|chair|clock|dining table|person|potted plant|umbrella|wine glass,000000238410.jpg,images/scanline_dashes/18000/000000238410.png
+7bdd2bfff391,scanline_dashes,18000,bed|book|laptop,000000433192.jpg,images/scanline_dashes/18000/000000433192.png
+d231eda820a9,scanline_dashes,18000,handbag|person|tie|traffic light|umbrella,000000496854.jpg,images/scanline_dashes/18000/000000496854.png
+d534aadeb13e,scanline_dashes,18000,cat,000000558073.jpg,images/scanline_dashes/18000/000000558073.png
+42da83f9174c,scanline_dashes,2000,bowl|broccoli|dining table|sandwich,000000030785.jpg,images/scanline_dashes/2000/000000030785.png
+05e81c3174da,scanline_dashes,2000,backpack|book|cell phone|chair|laptop|person,000000089648.jpg,images/scanline_dashes/2000/000000089648.png
+17a581fc4e15,scanline_dashes,2000,boat|person|umbrella,000000213033.jpg,images/scanline_dashes/2000/000000213033.png
+df5be1980a90,scanline_dashes,2000,bed|chair|tv,000000464358.jpg,images/scanline_dashes/2000/000000464358.png
+b06c4fa48bc4,scanline_dashes,2000,boat|person,000000472298.jpg,images/scanline_dashes/2000/000000472298.png
+11410a01b1b6,scanline_dashes,20000,backpack|car|handbag|person|suitcase|train,000000137727.jpg,images/scanline_dashes/20000/000000137727.png
+97fd69e2586c,scanline_dashes,20000,dog|person|truck,000000140203.jpg,images/scanline_dashes/20000/000000140203.png
+b926ec04d2cb,scanline_dashes,20000,person|surfboard,000000326174.jpg,images/scanline_dashes/20000/000000326174.png
+db4f8c9a772b,scanline_dashes,20000,vase,000000429530.jpg,images/scanline_dashes/20000/000000429530.png
+8288394a9b1b,scanline_dashes,20000,bottle|bowl|cup|knife|pizza,000000476787.jpg,images/scanline_dashes/20000/000000476787.png
+cf4722380680,scanline_dashes,4000,backpack|bench|handbag|person|train,000000070254.jpg,images/scanline_dashes/4000/000000070254.png
+498536ef84aa,scanline_dashes,4000,clock|person,000000088345.jpg,images/scanline_dashes/4000/000000088345.png
+95af7e21cd78,scanline_dashes,4000,bowl|broccoli|carrot|dining table|fork,000000105014.jpg,images/scanline_dashes/4000/000000105014.png
+b4ae89d3342b,scanline_dashes,4000,bus|car|traffic light|truck,000000315450.jpg,images/scanline_dashes/4000/000000315450.png
+2f75ffafd9b9,scanline_dashes,4000,person|surfboard,000000567011.jpg,images/scanline_dashes/4000/000000567011.png
+cbabcbcdc0fc,scanline_dashes,6000,bench|bicycle|dog|person,000000289343.jpg,images/scanline_dashes/6000/000000289343.png
+492e332ceb3e,scanline_dashes,6000,cup|pizza,000000324927.jpg,images/scanline_dashes/6000/000000324927.png
+7805f9362ef8,scanline_dashes,6000,bicycle|person|train,000000492937.jpg,images/scanline_dashes/6000/000000492937.png
+dc3c7b1b6430,scanline_dashes,6000,boat|person,000000508101.jpg,images/scanline_dashes/6000/000000508101.png
+9f4503b2d179,scanline_dashes,6000,giraffe,000000563603.jpg,images/scanline_dashes/6000/000000563603.png
+2724615b651a,scanline_dashes,8000,cake|person,000000102820.jpg,images/scanline_dashes/8000/000000102820.png
+7007f49f5a65,scanline_dashes,8000,,000000127135.jpg,images/scanline_dashes/8000/000000127135.png
+565d73c7d224,scanline_dashes,8000,bottle|chair|cup|dining table|fork|knife|person|pizza|umbrella,000000286553.jpg,images/scanline_dashes/8000/000000286553.png
+1c5e7822fa6d,scanline_dashes,8000,backpack|bottle|chair|dining table|laptop|person,000000306139.jpg,images/scanline_dashes/8000/000000306139.png
+cef35e755821,scanline_dashes,8000,bird,000000315001.jpg,images/scanline_dashes/8000/000000315001.png
+dac0bb55a393,stipple_tour,10000,bottle|cup|oven,000000102707.jpg,images/stipple_tour/10000/000000102707.png
+892a65ecb4e3,stipple_tour,10000,boat|chair|handbag|person,000000116439.jpg,images/stipple_tour/10000/000000116439.png
+dc8bc0db8958,stipple_tour,10000,bowl|broccoli|spoon,000000141328.jpg,images/stipple_tour/10000/000000141328.png
+6dbc757763c7,stipple_tour,10000,backpack|bus|car|person|traffic light,000000284445.jpg,images/stipple_tour/10000/000000284445.png
+cb38379f5a63,stipple_tour,10000,car|chair|person|scissors,000000297562.jpg,images/stipple_tour/10000/000000297562.png
+c63b5efddb93,stipple_tour,12000,bottle|bowl|cat|sink,000000047121.jpg,images/stipple_tour/12000/000000047121.png
+76d6dbfba082,stipple_tour,12000,apple|bottle|dining table|sandwich,000000173091.jpg,images/stipple_tour/12000/000000173091.png
+4acc9edaf6b0,stipple_tour,12000,bicycle|person|skateboard|train,000000558213.jpg,images/stipple_tour/12000/000000558213.png
+df9ba2fe1d0c,stipple_tour,12000,bottle|sink|toilet|toothbrush,000000569917.jpg,images/stipple_tour/12000/000000569917.png
+885feeadff87,stipple_tour,12000,baseball glove|person|sports ball,000000574823.jpg,images/stipple_tour/12000/000000574823.png
+1a6807137c7e,stipple_tour,14000,cow|horse|person,000000087470.jpg,images/stipple_tour/14000/000000087470.png
+e34372436374,stipple_tour,14000,train,000000234660.jpg,images/stipple_tour/14000/000000234660.png
+259ee6041e06,stipple_tour,14000,banana|bowl|cup|spoon,000000236721.jpg,images/stipple_tour/14000/000000236721.png
+e821599015e8,stipple_tour,14000,horse|person,000000319721.jpg,images/stipple_tour/14000/000000319721.png
+65e8d381090c,stipple_tour,14000,cup|dining table|laptop|sandwich|spoon,000000344100.jpg,images/stipple_tour/14000/000000344100.png
+b265db3da1c8,stipple_tour,16000,baseball bat|baseball glove|person,000000129945.jpg,images/stipple_tour/16000/000000129945.png
+42716df047e7,stipple_tour,16000,bicycle|car|motorcycle|parking meter|person,000000135410.jpg,images/stipple_tour/16000/000000135410.png
+e6b3f6b92583,stipple_tour,16000,dog,000000269113.jpg,images/stipple_tour/16000/000000269113.png
+5d91ce0ca62e,stipple_tour,16000,apple|dining table|sandwich,000000339442.jpg,images/stipple_tour/16000/000000339442.png
+2d7bd6df5091,stipple_tour,16000,cake|cell phone|dining table|person|tie,000000391722.jpg,images/stipple_tour/16000/000000391722.png
+bce2994c1748,stipple_tour,18000,car|person|skateboard,000000261982.jpg,images/stipple_tour/18000/000000261982.png
+4ae68623e263,stipple_tour,18000,bird,000000270705.jpg,images/stipple_tour/18000/000000270705.png
+cea9c6016cab,stipple_tour,18000,chair|person|tie,000000292082.jpg,images/stipple_tour/18000/000000292082.png
+de0ccc0dff53,stipple_tour,18000,baseball bat|baseball glove|person|umbrella,000000304404.jpg,images/stipple_tour/18000/000000304404.png
+7ee2da8d7969,stipple_tour,18000,car|truck,000000478474.jpg,images/stipple_tour/18000/000000478474.png
+cfd797ccf4c6,stipple_tour,2000,cell phone|handbag|person|train,000000076625.jpg,images/stipple_tour/2000/000000076625.png
+3671a4588bd3,stipple_tour,2000,cat,000000197528.jpg,images/stipple_tour/2000/000000197528.png
+f2455d560e1a,stipple_tour,2000,bus|person,000000255749.jpg,images/stipple_tour/2000/000000255749.png
+6b85e59d60c7,stipple_tour,2000,bench,000000350607.jpg,images/stipple_tour/2000/000000350607.png
+a43adca3d0bd,stipple_tour,2000,bear|bottle|person,000000390826.jpg,images/stipple_tour/2000/000000390826.png
+7fa8fdfaaecf,stipple_tour,20000,bottle|dining table|pizza,000000206027.jpg,images/stipple_tour/20000/000000206027.png
+a30f2fc2a8e9,stipple_tour,20000,airplane|bus|truck,000000293324.jpg,images/stipple_tour/20000/000000293324.png
+0cf511ad7088,stipple_tour,20000,book|laptop|person|tv,000000342367.jpg,images/stipple_tour/20000/000000342367.png
+1f6d46acd26b,stipple_tour,20000,frisbee|person,000000343803.jpg,images/stipple_tour/20000/000000343803.png
+1a1d9216b921,stipple_tour,20000,person|surfboard,000000532493.jpg,images/stipple_tour/20000/000000532493.png
+5f0eebe61c02,stipple_tour,4000,cell phone|person|toothbrush,000000123480.jpg,images/stipple_tour/4000/000000123480.png
+8294dd62c74d,stipple_tour,4000,chair|horse,000000269932.jpg,images/stipple_tour/4000/000000269932.png
+5ce1e127122a,stipple_tour,4000,book|chair|clock|person|potted plant|tv|vase,000000296231.jpg,images/stipple_tour/4000/000000296231.png
+2076db26acd8,stipple_tour,4000,bottle|chair|handbag|keyboard|laptop|mouse|person|tv,000000363840.jpg,images/stipple_tour/4000/000000363840.png
+9fa94da6e376,stipple_tour,4000,apple|dog|handbag|orange|person,000000479155.jpg,images/stipple_tour/4000/000000479155.png
+4953f49e21d4,stipple_tour,6000,person|train,000000001353.jpg,images/stipple_tour/6000/000000001353.png
+2274380e4d6e,stipple_tour,6000,cake|chair|dining table|dog,000000082807.jpg,images/stipple_tour/6000/000000082807.png
+7f0f9a2a5a64,stipple_tour,6000,boat|car|person,000000111086.jpg,images/stipple_tour/6000/000000111086.png
+c382da694429,stipple_tour,6000,clock,000000294163.jpg,images/stipple_tour/6000/000000294163.png
+f20a4fc2901b,stipple_tour,6000,dog|handbag|person|teddy bear,000000554579.jpg,images/stipple_tour/6000/000000554579.png
+c709f1a567fe,stipple_tour,8000,chair|dining table|donut|person,000000099810.jpg,images/stipple_tour/8000/000000099810.png
+c18c03d9a2dd,stipple_tour,8000,bottle|chair|person|tennis racket,000000133244.jpg,images/stipple_tour/8000/000000133244.png
+fbb2cadec15b,stipple_tour,8000,apple|cake|dining table|person,000000405249.jpg,images/stipple_tour/8000/000000405249.png
+cb0d9cda22c4,stipple_tour,8000,car|fire hydrant,000000427500.jpg,images/stipple_tour/8000/000000427500.png
+9049bc339593,stipple_tour,8000,backpack|person|skis,000000465836.jpg,images/stipple_tour/8000/000000465836.png
+f8e5707ce561,thread_painter,10000,boat|person,000000160772.jpg,images/thread_painter/10000/000000160772.png
+e4453cd945ae,thread_painter,10000,banana|bottle|chair|cup|microwave|oven|person|potted plant|remote|sink|spoon|wine glass,000000246968.jpg,images/thread_painter/10000/000000246968.png
+878214c90656,thread_painter,10000,bench|person|skis,000000289417.jpg,images/thread_painter/10000/000000289417.png
+00a0aabfb834,thread_painter,10000,dining table|fork|hot dog|knife|spoon,000000320664.jpg,images/thread_painter/10000/000000320664.png
+6ee56316901a,thread_painter,10000,book|bottle|cat|couch|dog|remote|tv,000000543581.jpg,images/thread_painter/10000/000000543581.png
+02ef6d9ebf8e,thread_painter,12000,cow,000000118594.jpg,images/thread_painter/12000/000000118594.png
+ecffdac68bad,thread_painter,12000,toilet,000000234413.jpg,images/thread_painter/12000/000000234413.png
+e2857a9fbccb,thread_painter,12000,airplane,000000336309.jpg,images/thread_painter/12000/000000336309.png
+bf22f08d9eda,thread_painter,12000,cell phone|handbag|person|sheep,000000338304.jpg,images/thread_painter/12000/000000338304.png
+1015229ad5c9,thread_painter,12000,car|person|skateboard,000000378673.jpg,images/thread_painter/12000/000000378673.png
+261263c594d9,thread_painter,14000,bench|bicycle|boat|car|person|truck,000000082821.jpg,images/thread_painter/14000/000000082821.png
+c697bd92f11a,thread_painter,14000,dog|frisbee,000000255664.jpg,images/thread_painter/14000/000000255664.png
+d9997de750cc,thread_painter,14000,person,000000259854.jpg,images/thread_painter/14000/000000259854.png
+3c76834afad0,thread_painter,14000,chair|couch|handbag|person|remote,000000468501.jpg,images/thread_painter/14000/000000468501.png
+006f2d623627,thread_painter,14000,person|train,000000505638.jpg,images/thread_painter/14000/000000505638.png
+2524e757ed7e,thread_painter,16000,car|horse,000000017178.jpg,images/thread_painter/16000/000000017178.png
+766da917691a,thread_painter,16000,bench|dining table|umbrella,000000203580.jpg,images/thread_painter/16000/000000203580.png
+052d0182e9cf,thread_painter,16000,person|tennis racket,000000289059.jpg,images/thread_painter/16000/000000289059.png
+4ecac68ed4f5,thread_painter,16000,car|truck|zebra,000000305695.jpg,images/thread_painter/16000/000000305695.png
+2a8b7a6219d2,thread_painter,16000,person|toothbrush,000000500565.jpg,images/thread_painter/16000/000000500565.png
+07ea04487264,thread_painter,18000,bench|person|surfboard,000000039785.jpg,images/thread_painter/18000/000000039785.png
+2e2605a7e171,thread_painter,18000,stop sign,000000193884.jpg,images/thread_painter/18000/000000193884.png
+09736626b2d5,thread_painter,18000,bed|chair|couch|remote|tv,000000218091.jpg,images/thread_painter/18000/000000218091.png
+1a76b53739af,thread_painter,18000,car|kite|person|truck,000000478721.jpg,images/thread_painter/18000/000000478721.png
+aeff0c608653,thread_painter,18000,bird|truck,000000490125.jpg,images/thread_painter/18000/000000490125.png
+e401c50b0113,thread_painter,2000,car|train|truck,000000100274.jpg,images/thread_painter/2000/000000100274.png
+183443eb75a7,thread_painter,2000,bear,000000132622.jpg,images/thread_painter/2000/000000132622.png
+449468304b63,thread_painter,2000,bus|car|person|potted plant,000000211674.jpg,images/thread_painter/2000/000000211674.png
+e72aeca4693b,thread_painter,2000,cat|couch|dog,000000241326.jpg,images/thread_painter/2000/000000241326.png
+855998449ef2,thread_painter,2000,horse|person,000000456015.jpg,images/thread_painter/2000/000000456015.png
+394042e89053,thread_painter,20000,person|sports ball|tennis racket,000000037988.jpg,images/thread_painter/20000/000000037988.png
+2a98653de395,thread_painter,20000,handbag|person|refrigerator,000000237118.jpg,images/thread_painter/20000/000000237118.png
+093ecb025256,thread_painter,20000,kite|person,000000426836.jpg,images/thread_painter/20000/000000426836.png
+01ef5fc9e83d,thread_painter,20000,person|surfboard,000000441286.jpg,images/thread_painter/20000/000000441286.png
+48b649e3ab24,thread_painter,20000,apple|banana|orange,000000560256.jpg,images/thread_painter/20000/000000560256.png
+3578e08d82cf,thread_painter,4000,bench|dog|person,000000088951.jpg,images/thread_painter/4000/000000088951.png
+40fe13204539,thread_painter,4000,person|skateboard,000000172649.jpg,images/thread_painter/4000/000000172649.png
+603689b6cfae,thread_painter,4000,bench|cake|dining table|fork|person,000000261116.jpg,images/thread_painter/4000/000000261116.png
+e8c94606f305,thread_painter,4000,person|tie,000000289229.jpg,images/thread_painter/4000/000000289229.png
+ce38f17999e6,thread_painter,4000,book|cat|suitcase,000000443303.jpg,images/thread_painter/4000/000000443303.png
+1de0e34c79d2,thread_painter,6000,pizza,000000024144.jpg,images/thread_painter/6000/000000024144.png
+378eb9a7bac4,thread_painter,6000,airplane|parking meter,000000033114.jpg,images/thread_painter/6000/000000033114.png
+6cd55b08d09a,thread_painter,6000,bed|cat|laptop,000000077595.jpg,images/thread_painter/6000/000000077595.png
+94375430c9e0,thread_painter,6000,train,000000177383.jpg,images/thread_painter/6000/000000177383.png
+7df1782a0cf8,thread_painter,6000,person|remote,000000320642.jpg,images/thread_painter/6000/000000320642.png
+396df7240bca,thread_painter,8000,bird,000000106881.jpg,images/thread_painter/8000/000000106881.png
+18d216c78f60,thread_painter,8000,car|chair|couch|fire hydrant|person|suitcase,000000158744.jpg,images/thread_painter/8000/000000158744.png
+e9fd24a45074,thread_painter,8000,person|skis,000000312720.jpg,images/thread_painter/8000/000000312720.png
+92793dbdbb6f,thread_painter,8000,bus|car|motorcycle|person,000000423617.jpg,images/thread_painter/8000/000000423617.png
+c8ed3172dda0,thread_painter,8000,person|skateboard,000000431848.jpg,images/thread_painter/8000/000000431848.png

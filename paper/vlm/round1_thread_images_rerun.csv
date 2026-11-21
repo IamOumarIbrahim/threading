@@ -1,0 +1,101 @@
+identifier,prediction
+06112751d6de,building
+5c5dc8546cad,NONE
+503337b97a1c,mountain|rock|sky
+e365d2fc0956,dog|motorcycle|shelf
+7b4ca2c83058,orange|bread|apple
+18da76a167c8,monitor|keyboard|mouse|desk|chair|window
+4bb36fc34797,window|light|ceiling|wall|bed|pillow
+3528980b01cc,NONE
+18d216c78f60,side mirror|armchair|fence|building|shrub|sidewalk|curb|road|fire hydrant|person|bicycle
+396df7240bca,hawk|branch|tree trunk|leaves|twig
+3578e08d82cf,tree|bench|man|cane|dog|bushes|building|path|hat
+13ad587e24b7,NONE
+6384822b0a6a,cake|strawberry|mint leaf|plate|flower
+7a805b3ea741,bread
+88b6659da594,sky|field|building|road
+024142aa4c4a,child|shirt|rock|tree|name tag
+dac0bb55a393,person
+c382da694429,NONE
+6b70de07b7c5,cat|bowl|banana
+92f06ff16f03,flower
+e5efc5bc394f,NONE
+2d03189acdaa,NONE
+dea9d98d26c1,building
+0cd58e07fc91,bed|door|chair
+0675bfe4f25f,window|plant|chair|table
+0f6d71c0a990,window
+e31b02e7149a,NONE
+42da83f9174c,NONE
+c38ff3db72f6,NONE
+cb0a0eea7427,refrigerator
+e55acb6da8c8,keyboard|laptop
+d4910d8e7075,NONE
+b4ae89d3342b,car
+cb0d9cda22c4,NONE
+dc3c7b1b6430,boat|person|water
+f4eb0514b926,truck|tree
+1ebc0162c64d,NONE
+5bf1d3783193,bookshelf|book
+5ce1e127122a,NONE
+e72aeca4693b,dog|couch|window
+6cd55b08d09a,cat|laptop|keyboard|bed|blanket
+97173a9af6b4,table|chair
+7983e80a9dc0,globe
+d00bacb43475,NONE
+05e81c3174da,NONE
+fd07c8cc73f1,NONE
+726fca8c57b2,tree|leaves|bench
+6dbc757763c7,NONE
+ceb2d779a515,monitor|desk|lamp
+6b85e59d60c7,NONE
+e1e3aee69d1e,ornament
+d6c9b9b3e85d,NONE
+f1f62c2e4665,NONE
+de49daad2d28,window|curtain
+8e7bf5af4764,NONE
+6ee56316901a,tv|couch|picture frame|bookshelf|lamp|coffee table|tv stand|rug|window|side table|laptop|chair
+94375430c9e0,train|locomotive|windshield|headlights|buffers|railway tracks|overhead wires|platform|building|sky
+ca44ba5d34d1,deer|tree|grass
+e438de7ed329,NONE
+40fe13204539,person|skateboard|ramp|wall
+afe30ad09a9c,aquarium|table
+8b8bd4e68e5a,NONE
+7bb368ea7b84,archway|tree
+f29f37b255bf,door|bed
+d67fa1fc4a4c,tray|bread|bowl
+5d4c84ac2f1e,NONE
+cfd797ccf4c6,NONE
+23381e9b4c6f,hill|water|grass|sky|animal
+ae5c2d9fd2a4,cat|toilet
+198cc17bd050,person|grass|car
+c7a40d3fd43e,rain|sea|person|boat
+c18c03d9a2dd,NONE
+2cbed99c3c31,NONE
+e66fcc124919,salad
+875b976a0ab6,NONE
+8e0731e5e036,monitor|desk|cup
+e4453cd945ae,person|cabinet|light|countertop|pitcher|bowl|plate|bottle|jar|container|door|chair|oven|plant|vase|glass|range hood
+d33f6e0bae74,person|cap|tennis net|tennis court|tree|shirt
+1c5e7822fa6d,NONE
+e401c50b0113,tank|utility pole|tree|road|fence
+631fbe2c7c60,NONE
+7805f9362ef8,NONE
+cd2920dfd655,tree|sign|grass|hill
+538608fb11c0,NONE
+4953f49e21d4,maze
+9ce7e6e7d32d,person|curtain
+0492ca9f599e,airplane|jet engine|wing|person|bus|backpack|handbag|tarmac|airplane
+b9dc7ca5217b,NONE
+6c2c373e226b,cat
+29b53c1d0932,torii gate|moon|water
+eb702a1b4c87,NONE
+705f71c0c4d9,NONE
+5bbdc981fe95,monitor|keyboard|speaker|mouse|desk
+1482b2ceb64d,topographic map|contour lines
+bac0beb2f9d4,airplane
+c64fcac210c0,book|bookshelf
+689d4f28b29b,wreath
+2f75ffafd9b9,bird
+9fa94da6e376,NONE
+cef35e755821,NONE

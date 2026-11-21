@@ -1,0 +1,27 @@
+\begin{table}[t]
+\centering
+\caption{Retention by algorithm, averaged over the thread counts both models were tested on (2,000 to 10,000).}
+\label{tab:by-algorithm}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & \multicolumn{3}{c}{VLM} & YOLO \\
+\cmidrule(lr){2-4}\cmidrule(l){5-5}
+Algorithm & Recall, & Recall, & Retention & Retention \\
+ & thread & original & & \\
+ & image (\%) & photo (\%) & (\%) & (\%) \\
+\midrule
+thread painter & 60.5 & 90.6 & 66.8 & 37.5 \\
+greedy residual & 41.8 & 86.6 & 48.3 & 26.1 \\
+quadtree hatch & 19.9 & 87.7 & 22.7 & 22.6 \\
+radon peel & 19.1 & 85.6 & 22.3 & 25.1 \\
+edge tangent & 14.9 & 88.9 & 16.8 & 16.0 \\
+flow streamlines & 15.2 & 91.2 & 16.7 & 25.7 \\
+greedy error & 13.7 & 85.4 & 16.0 & 21.0 \\
+scanline dashes & 9.3 & 90.2 & 10.4 & 14.6 \\
+anchor web & 1.2 & 84.3 & 1.4 & 8.9 \\
+stipple tour & 1.2 & 88.7 & 1.4 & 14.1 \\
+\bottomrule
+\end{tabular}
+\end{table}

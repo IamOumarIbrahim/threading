@@ -6,6 +6,10 @@ numpy==2.5.2
 pandas==2.3.3
 pyyaml==6.0.2
 
+# Paper scripts (pretrained YOLO scoring, figures)
+pycocotools>=2.0
+pillow>=10
+
 # Tests
 pytest>=9,<10
 

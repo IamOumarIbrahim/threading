@@ -1,0 +1,11 @@
+label,n,vlm,lo,hi,minus,plus
+thread painter,75,66.8,57.3,76.3,9.6,9.5
+greedy residual,75,48.3,39.5,57.2,8.7,9.0
+quadtree hatch,75,22.7,15.9,30.1,6.8,7.4
+radon peel,74,22.3,15.6,29.5,6.6,7.2
+edge tangent,75,16.8,10.9,23.2,5.8,6.4
+flow streamlines,75,16.7,10.4,23.8,6.3,7.2
+greedy error,73,16.0,10.5,22.6,5.5,6.6
+scanline dashes,74,10.4,5.6,15.5,4.8,5.1
+anchor web,75,1.4,0.0,3.3,1.4,1.9
+stipple tour,75,1.4,0.0,3.2,1.4,1.8

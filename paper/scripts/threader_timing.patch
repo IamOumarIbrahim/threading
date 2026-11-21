@@ -1,0 +1,23 @@
+threader.cpp	2026-11-21 04:05:08.739719609 +0400
+threader_timed.cpp	2026-11-21 07:16:38.468800923 +0400
+@@ -2578,7 +2578,10 @@
+         }
+     }
+ 
++    auto tf0 = std::chrono::steady_clock::now();
+     TangentField field = tangent_field(img.data, W, H);
++    std::printf("SETUP_SECONDS %.6f\n", std::chrono::duration<double>(std::chrono::steady_clock::now() - tf0).count());
++    std::fflush(stdout);
+     std::string target_info = (target_threads > 0) ? (", target threads: ~" + std::to_string(target_threads)) : "";
+     std::cout << "Input " << image_path << " -> " << W << "x" << H
+               << ", background " << bg_str << target_info
+@@ -2619,6 +2622,9 @@
+ 
+         auto raw_threads = algo.func(img.data, W, H, bg, field, rng, budget, logger, target_threads);
+         auto threads = finalize_threads(raw_threads, W, H);
++        // [timing build] C++ wall-clock time of the threading step only (no file writing)
++        std::printf("ALGO_SECONDS %s %.6f\n", std::string(algo.name).c_str(), std::chrono::duration<double>(std::chrono::steady_clock::now() - t0).count());
++        std::fflush(stdout);
+ 
+         std::fprintf(stderr, "\r%40s\r", "");
+         std::fflush(stderr);

@@ -9,3 +9,19 @@ dataset/
 results/
 runs/
 config/instances_val2017.json
+.venv/
+
+# Study images (rebuild with recognition/build_dataset.py and paper/scripts)
+IMAGE_DATASET/images/
+IMAGE_DATASET_EXTRA/images/
+# Human-study answers contain rater names: never commit
+IMAGE_DATASET/responses.sqlite
+*.sqlite
+
+# LaTeX build files
+paper/*.aux
+paper/*.log
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.out
+paper/*.synctex.gz

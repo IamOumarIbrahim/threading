@@ -1,0 +1,11 @@
+label,vlm,yolo
+thread painter,66.8,37.5
+greedy residual,48.3,26.1
+quadtree hatch,22.7,22.6
+radon peel,22.3,25.1
+edge tangent,16.8,16.0
+flow streamlines,16.7,25.7
+greedy error,16.0,21.0
+scanline dashes,10.4,14.6
+anchor web,1.4,8.9
+stipple tour,1.4,14.1
