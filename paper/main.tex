@@ -67,6 +67,17 @@
 \providecommand{\VlmParetoBestE}{0}\providecommand{\VlmParetoBestR}{0}
 \providecommand{\YoloParetoBestE}{0}\providecommand{\YoloParetoBestR}{0}
 \IfFileExists{data/pareto_best.tex}{\input{data/pareto_best.tex}}{}
+% Best recall per KB when drawing time is ignored (scripts/make_size_only.py).
+\providecommand{\SizeOnlyBest}{}\providecommand{\SizeOnlyBestVlm}{}\providecommand{\SizeOnlyBestYolo}{}\providecommand{\SizeOnlyVlmY}{0}\providecommand{\SizeOnlyYoloY}{0}
+\providecommand{\CarryThreads}{}\providecommand{\CarryKB}{}\providecommand{\CarryVlm}{}\providecommand{\CarryYolo}{}
+\IfFileExists{data/size_only.tex}{\input{data/size_only.tex}}{}
+% Robustness of the choice to other ways of counting (scripts/robustness.py).
+\providecommand{\RobustMinRho}{}\providecommand{\RobustSameBest}{}\providecommand{\RobustCarries}{}
+\providecommand{\ShortImages}{}\providecommand{\ShortTotal}{}\providecommand{\ShortAlgos}{}
+\IfFileExists{data/robustness.tex}{\input{data/robustness.tex}}{}
+% Balanced check: every scene drawn by every algorithm (scripts/balanced_*.py).
+\providecommand{\BalScenes}{}\providecommand{\BalRhoYolo}{}\providecommand{\BalRhoVlm}{}\providecommand{\BalTop}{}\providecommand{\BalBase}{}\providecommand{\BalSecond}{}
+\IfFileExists{data/balanced.tex}{\input{data/balanced.tex}}{}
 % Circle drawn around the chosen cell in Table III.
 \newcommand{\bestcell}[1]{\tikz[baseline=(b.base)]\node[draw=black, thick, ellipse, inner xsep=0pt, inner ysep=0.5pt](b){#1};}
 % Outline drawn around the chosen algorithm's row in a heatmap.
@@ -74,22 +85,23 @@
 
 \begin{document}
 
-\title{Can Machines See Thread Art?\\ Measuring What Survives When a Photo Becomes Threads}
+\title{Object Recognition in Thread Art by Humans,\\ Vision-Language Models and Object Detectors}
 
 \author{
 \IEEEauthorblockN{Oumar Ibrahim, Mohamad Khairy, Mir Umer Jarwar and Anugrah Shaju}
-\IEEEauthorblockA{University of Sharjah, Sharjah, UAE\\
+\IEEEauthorblockA{Department of Computer Engineering, College of Computing and Informatics\\
+University of Sharjah, Sharjah, UAE\\
 u22200741@sharjah.ac.ae, mishak@sharjah.ac.ae, u20105400@sharjah.ac.ae, u22102372@sharjah.ac.ae}
 }
 
 \maketitle
 
 \begin{abstract}
-Thread art redraws a photo as thousands of straight coloured lines. We ask how much of the scene a machine can still recognise in such an image, and how many bytes the image needs. We drew 1,000 scenes from the Common Objects in Context (COCO) dataset with ten threading algorithms at ten thread counts. We then tested two models on these thread images. The first is a vision-language model (VLM) that names what it sees. The second is a You Only Look Once (YOLO) object detector trained on thread images. For both models we report retention, which is the score on thread images as a percentage of the score on the original photos. Choosing a better algorithm matters about twice as much as adding five times more threads. The best algorithm keeps most of what the VLM finds in the original photo, and the worst keeps almost nothing. Both models rank the algorithms in almost the same order. Threading rarely makes the VLM name objects that are not there. The compressed thread list is smaller than the original image file at every thread count we tested, but at the same file size the algorithms differ widely. A selection table weighs recall against drawing time and file size for every algorithm and thread count. We discuss uses in sending images over weak links, in sharing scenes privately and in testing how models see shape.
+Thread art redraws a photo as thousands of straight coloured lines. We ask how much of the scene people and machines can still recognise in such an image, and how many bytes the image needs. We drew 1,000 scenes from the Common Objects in Context (COCO) dataset with ten threading algorithms at ten thread counts. We then tested three judges on these thread images. The first is a vision-language model (VLM) that names what it sees. The second is a You Only Look Once (YOLO) object detector used as released. The third is a group of three human raters who name objects in a web app. For the two models we report retention, which is the score on thread images as a percentage of the score on the original photos. Choosing a better algorithm matters about twice as much as adding five times more threads. The best algorithm keeps most of what the VLM finds in the original photo, and the worst keeps almost nothing. Both models rank the algorithms in almost the same order. Threading rarely makes the VLM name objects that are not there. The compressed thread list is smaller than the original image file at every thread count we tested, but at the same file size the algorithms differ widely. A selection table weighs recall against drawing time and file size for every algorithm and thread count. We discuss uses in sending images over weak links, in sharing scenes privately and in testing how models see shape. \todo{one sentence on the human results.}
 \end{abstract}
 
 \begin{IEEEkeywords}
-thread art, string art, object recognition, vision-language models, object detection, image compression
+thread art, string art, object recognition, human perception, vision-language models, object detection, image compression
 \end{IEEEkeywords}
 
 % =====================================================================
@@ -97,18 +109,20 @@ thread art, string art, object recognition, vision-language models, object detec
 
 String art and thread art build an image out of straight lines. Each thread is stretched between two points, and many threads together form tone through how densely they overlap. Artists made such portraits by hand for decades, and recent work turned the craft into an optimisation problem that a computer or a robot can solve \cite{birsak2018,demoussel2022,nehring2023}.
 
-A thread image is an unusual input for a machine. It has no fine detail or texture, but it keeps outlines and rough shading. Vision models rely on texture more than people do \cite{geirhos2019texture}, so thread images test whether a model can recognise a scene from its shape.
+A thread image is an unusual input for people and machines alike. It has no fine detail or texture, but it keeps outlines and rough shading. Vision models rely on texture more than people do \cite{geirhos2019texture}, so thread images test whether a model, like a person, can recognise a scene from its shape.
 
-This paper asks two questions. How much of a scene can a machine still recognise once the photo becomes threads? How many bytes does the thread version need? We test two models. A vision-language model (VLM) reads an image and answers in words. A You Only Look Once (YOLO) object detector \cite{tian2025} finds objects and draws boxes around them. Fig.~\ref{fig:pipeline} shows the study. Our contributions are the following.
+Thread images are attractive, but their practical use is less clear. Because they drop fine detail, they could hide faces or licence plates while keeping a scene recognisable. Because a thread list is short, it could also be sent where bandwidth is scarce. Building such applications first requires several open choices to be settled: which algorithm to use, how many threads, whether a thread list is a viable alternative to a standard image file, and whether different judges agree on what the images show. This paper benchmarks these choices and settles them, so that later work can start from one algorithm and one thread count. We test three judges. A vision-language model (VLM) reads an image and answers in words. A You Only Look Once (YOLO) object detector \cite{tian2025} finds objects and draws boxes around them. Three human raters name the objects in each image without a list of classes. Fig.~\ref{fig:pipeline} shows the study. Our contributions are the following.
 
 \begin{itemize}
 \item A dataset of 1,000 thread images made from scenes of the Common Objects in Context (COCO) dataset \cite{lin2014}, covering ten threading algorithms and ten thread counts (Section~\ref{sec:data}).
 \item A blind test of the VLM on the thread images and on the original photos. Comparing the two shows what threading removes (Section~\ref{sec:models}).
+\item A human recognition study on the same thread images, scored in the same way as the VLM (Section~\ref{sec:human}).
 \item A comparison of the two models on one shared measure, called retention, and a comparison of retention with file size for every algorithm (Section~\ref{sec:results}).
 \item A selection table that gives the drawing time, file size, recall and cost-efficiency of every algorithm at every thread count (Table~\ref{tab:efficiency}).
+\item A single setting for later work, \SizeOnlyBest{} at \CarryThreads{} threads, chosen from recall per kilobyte for both models (Section~\ref{sec:conclusion}).
 \end{itemize}
 
-Section~II reviews related work. Section~III describes the algorithms, data, models and measures. Section~IV gives the results, and Section~V discusses what they mean.
+Section~II reviews related work. Section~III describes the algorithms, data, models and measures. Section~IV gives the results for the models and the human raters, and Section~V discusses what they mean.
 
 \begin{figure}[t]
 \centering
@@ -123,15 +137,18 @@ Section~II reviews related work. Section~III describes the algorithms, data, mod
 \node[box, right=0.45cm of photo, minimum height=1.3cm] (thr) {threader\\[1pt]10 algorithms\\$\times$ 10 thread counts};
 \node[inner sep=0, right=0.45cm of thr] (timg) {\includegraphics[width=2.1cm]{figs/thumb_threaded.png}};
 \node[below=1pt of timg] {thread image};
-\node[box, right=0.6cm of timg, yshift=0.55cm, minimum width=1.5cm] (vlm) {VLM};
-\node[box, right=0.6cm of timg, yshift=-0.55cm, minimum width=1.5cm] (yolo) {YOLO};
-\node[box, right=0.5cm of vlm, yshift=-0.55cm, minimum height=1.6cm] (ret) {retention\\[1pt]\scriptsize score on thread image\\[-1pt]\scriptsize $\div$ score on original photo};
+\node[box, right=0.6cm of timg, yshift=0.75cm, minimum width=1.5cm] (vlm) {VLM};
+\node[box, right=0.6cm of timg, minimum width=1.5cm] (yolo) {YOLO};
+\node[box, right=0.6cm of timg, yshift=-0.75cm, minimum width=1.5cm] (hum) {human};
+\node[box, right=0.5cm of yolo, yshift=0.375cm, minimum height=1.3cm] (ret) {retention\\[1pt]\scriptsize score on thread image\\[-1pt]\scriptsize $\div$ score on original photo};
 \draw[arr] (photo) -- (thr); \draw[arr] (thr) -- (timg);
-\draw[arr] (timg.east) -- (vlm.west); \draw[arr] (timg.east) -- (yolo.west);
+\draw[arr] (timg.east) -- (vlm.west); \draw[arr] (timg.east) -- (yolo.west); \draw[arr] (timg.east) -- (hum.west);
+\node[box, anchor=west] (hrec) at (ret.west|-hum) {recall\\[-1pt]\scriptsize scored like the VLM};
+\draw[arr] (hum.east) -- (hrec.west);
 \draw[arr] (vlm.east) -- (ret.west|-vlm.east); \draw[arr] (yolo.east) -- (ret.west|-yolo.east);
-\draw[arr, dashed] (photo.north) -- ++(0,0.5) -| node[pos=0.25, above, font=\scriptsize] {both models also see the original photo} (ret.north);
+\draw[arr, dashed] (photo.north) -- ++(0,0.5) -| node[pos=0.25, above, font=\scriptsize] {the VLM and YOLO also see the original photo} (ret.north);
 \end{tikzpicture}}
-\caption{Study design. Each original photo is turned into thread images. Both models are scored on the thread images and on the original photos, and retention compares the two scores.}
+\caption{Study design. The VLM and YOLO are scored on thread images and original photos. The raters see only thread images.}
 \label{fig:pipeline}
 \end{figure}
 
@@ -152,23 +169,23 @@ Section~II reviews related work. Section~III describes the algorithms, data, mod
 \subsection{Threading algorithms}
 \label{sec:algos}
 
-Each algorithm turns an image into a thread list. A thread is a straight segment with two end points, a colour and an opacity. The algorithms differ in where they place threads and in what they try to keep. Table~\ref{tab:algorithms} summarises them, and Fig.~\ref{fig:grid-algorithms} shows all ten on one scene. The table and every figure list the algorithms in the same order, from the highest VLM retention to the lowest.
+Each algorithm turns an image into a thread list. A thread is a straight segment with two end points, a colour and an opacity. The algorithms differ in where they place threads and in what they try to keep. Table~\ref{tab:algorithms} summarises them, and Fig.~\ref{fig:grid-algorithms} shows all ten on one scene. Figs.~\ref{fig:internals-a} and~\ref{fig:internals-b} in the appendix open each algorithm up and show the internal states that lead from the photo to the threads. The table and every figure list the algorithms in the same order, from the highest VLM retention to the lowest.
 
 \input{data/tab_algorithms.tex}
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/grid_algorithms_10k.png}
-\caption{One scene drawn by all ten algorithms with 10,000 threads each, numbered from the highest VLM retention to the lowest. The scene is not part of the study set.}
+\caption{One scene drawn by all ten algorithms at 10,000 threads, ordered by VLM retention. It is not part of the study set.}
 \label{fig:grid-algorithms}
 \end{figure*}
 
 \subsection{Datasets}
 \label{sec:data}
 
-\textbf{VLM set.} We took 500 scenes from the 2017 validation split of COCO (val2017) and used each scene once. Scenes shown in an earlier pilot round were excluded. Each of the 100 combinations of algorithm and thread count (2,000 to 20,000 in steps of 2,000) received five scenes. A second round added 500 more scenes, ten for each combination from 2,000 to 10,000 threads, where the VLM is compared with YOLO. These cells therefore hold 15 scenes each, and the others hold five. In both rounds we sorted the scenes by content before assigning them, so each combination received a similar mix of people, animals and objects. No scene is used twice. The ground truth of a scene is its list of COCO object classes. A scene has \NumClassesPerImage{} classes on average. Every thread image was drawn at the size of the original photo with seed 7.
+\textbf{VLM set.} We took 500 scenes from the 2017 validation split of COCO (val2017) and used each scene once. Scenes shown in an earlier pilot round were excluded. Each of the 100 combinations of algorithm and thread count (2,000 to 20,000 in steps of 2,000) received five scenes. A second round added 500 more scenes, ten for each combination from 2,000 to 10,000 threads, where the VLM is compared with YOLO. These cells therefore hold 15 scenes each, and the others hold five. In both rounds we sorted the scenes by content before assigning them, so each combination received a similar mix of people, animals and objects. No scene is used twice. The ground truth of a scene is its list of COCO object classes. A scene has \NumClassesPerImage{} classes on average. Every thread image was drawn at the size of the original photo with seed 7. Some algorithms stop early when no ink is left to place. \ShortImages{} of the \ShortTotal{} thread images have fewer than 90\% of their target threads, all from \ShortAlgos{}. File sizes always use the threads actually drawn.
 
-\textbf{YOLO set.} YOLO uses all 5,000 val2017 images at thread counts from 1,000 to 10,000. The images are split 60/20/20 into training, validation and test sets with seed 1. YOLO needs boxes, so its ground truth is the boxes that YOLOv12n \cite{tian2025} finds in the original photos at a confidence of 0.3. Its score is the mean average precision at a box overlap of 0.5 (mAP50). On the original photos YOLOv12n reaches a test mAP50 of \YoloBaseMAP.
+\textbf{One set for every judge.} The VLM, YOLO and the human raters all see these same 1,000 thread images and their original photos, at 2,000 to 20,000 threads in steps of 2,000, and every result in this paper uses that grid.
 
 \subsection{Models}
 \label{sec:models}
@@ -178,7 +195,7 @@ Fig.~\ref{fig:models} shows how each model turns a thread image into an answer.
 \begin{figure*}[t]
 \centering
 \resizebox{0.85\textwidth}{!}{\input{figs/models.tex}}
-\caption{How each model reads the same thread image. The VLM cuts the image into patches, turns them into tokens and answers in words. YOLO passes the image through convolutional layers and outputs boxes with classes. The human rater types free words in a web app. Words from the VLM and the rater are mapped to COCO classes before scoring.}
+\caption{How each judge reads a thread image. Words from the VLM and the raters are mapped to COCO classes.}
 \label{fig:models}
 \end{figure*}
 
@@ -190,19 +207,19 @@ Use the Read tool to view the image at: images/\{ID\}.png. If you see something 
 
 The prompt gives no list of classes, so the VLM cannot guess from a short list. We then used the same prompt on the 1,000 original photos. These were saved as new Portable Network Graphics (PNG) files under new random names in a separate folder. No session could link an original photo to its thread image.
 
-\textbf{YOLO.} For each algorithm and thread count we fine-tuned YOLOv12n on the thread images of the training split. We used the Ultralytics library \cite{ultralytics} with 100 epochs, batch size 16, image size 640 and seed 1. Each model was tested on the thread images of the test split.
+\textbf{YOLO.} We ran YOLOv12n \cite{tian2025} as released, through the Ultralytics library \cite{ultralytics}, on the thread images and the original photos. The classes it finds at a confidence of 0.3 are scored by recall against the COCO classes, exactly like the VLM. YOLO is not fine-tuned, so it has the same exposure as the VLM and the human raters: none of them saw thread images before the test. On the original photos YOLO finds \YoloRecallOriginal\% of the COCO classes, against \VlmRecallOriginal\% for the VLM.
 
-\textbf{Human rater.} \todo{protocol. The first author will rate all 500 thread images in the web app of Fig.~\ref{fig:models}. Six images whose original photos the author has seen will be excluded.}
+\textbf{Human raters.} Three raters, one of them the first author, each rate all 1,000 thread images of the VLM set in the web app of Fig.~\ref{fig:models}. The humans and the VLM therefore see exactly the same images, with the same number of scenes per combination. Each rater sees the images in their own random order, arranged so that neighbouring images never share an algorithm or a thread count. For each image the rater types the objects they see, with no list of classes, or marks the image as unrecognisable. The app records how long each answer takes. Six images whose original photos the first author has seen are excluded for that rater.
 
 \subsection{Scoring}
 
-We map words from the VLM to COCO classes with a fixed list of synonyms. For example, ``man'' counts as person and ``sofa'' counts as couch. Words that match no class, such as ``sky'', are ignored. The VLM score is \emph{recall}, the share of a scene's COCO classes that the VLM named. The YOLO score is test mAP50.
+We map words from the VLM and the human raters to COCO classes with a fixed list of synonyms. For example, ``man'' counts as person and ``sofa'' counts as couch. Words that match no class, such as ``sky'', are ignored. The VLM and human score is \emph{recall}, the share of a scene's COCO classes that the judge named. The YOLO score is test mAP50.
 
-These two scores measure different things. To compare the models, we use \emph{retention}. Retention is a model's score on thread images divided by its score on the original photos of the same scenes. A retention of 100\% means threading lost nothing. The two models were tested at different thread counts, so all direct comparisons use the counts both share, 2,000 to 10,000.
+Both models are scored by recall against the same COCO classes, but they recognise different amounts in the original photos. To compare them, we use \emph{retention}. Retention is a model's recall on thread images divided by its recall on the original photos of the same scenes. A retention of 100\% means threading lost nothing.
 
 \subsection{File size}
 
-A sender would transmit the thread list, not the drawn image. Each thread holds four 8-bit values for colour and opacity, and four end points rounded to whole pixels. For images up to 1,024 pixels wide, each end point fits in 10 bits, so one thread fits in exactly 9 bytes. We then compress the list with the xz tool, which uses the Lempel--Ziv--Markov chain algorithm (LZMA). Both steps are lossless. In this paper, file size always means this compressed thread list. We compare it with the original Joint Photographic Experts Group (JPEG) file from COCO.
+A sender would transmit the thread list, not the drawn image. Each thread holds four 8-bit values for colour and opacity, and four end points rounded to whole pixels. For images up to 1,024 pixels wide, each end point fits in 10 bits, so one thread fits in exactly 9 bytes. We then compress the list with the xz tool, which uses the Lempel--Ziv--Markov chain algorithm (LZMA). Both steps are lossless. In this paper, file size always means this compressed thread list. Before compression every thread takes exactly 9 bytes, so lists with the same thread count have the same size. After compression the size depends on how regular the threads are, which is why algorithms with the same thread count can differ in file size. We compare it with the original Joint Photographic Experts Group (JPEG) file from COCO.
 
 To get the thread lists, we rebuilt the threader with the GNU Compiler Collection (GCC) and drew every image again with the same settings. For \IdenticalMethods{} of the ten algorithms the new images are identical to the study images. The other algorithms use random-number functions that differ between compilers. Their threads differ slightly, but their counts and format are the same.
 
@@ -228,13 +245,13 @@ Fig.~\ref{fig:control} counts every COCO class that the VLM named in either vers
 \legend{named in the original photo and in the thread image, named in the original photo only (lost by threading), named in the thread image only (invented)}
 \end{axis}
 \end{tikzpicture}
-\caption{Threading hides objects far more often than it invents them. The bar counts the COCO classes that the VLM named across all \PairedScenes{} scenes, split by where it named them.}
+\caption{Threading hides objects far more often than it invents them. COCO classes named by the VLM across all \PairedScenes{} scenes.}
 \label{fig:control}
 \end{figure}
 
 \subsection{The algorithm decides what survives}
 
-Table~\ref{tab:by-algorithm} and Fig.~\ref{fig:bars} compare the algorithms over the thread counts both models share. The second column of the table shows that the VLM names most COCO classes in the original photos for every algorithm, so the differences in retention come from threading. Thread painter and greedy residual keep the most. Anchor web and stipple tour keep the least. YOLO ranks the algorithms in almost the same order. The Spearman rank correlation between the two rankings is \RankCorr{}, where 1 would mean the same order. Fig.~\ref{fig:grid-bw} shows the difference on one scene. With \BestAlgo{} the aircraft is clear from a few thousand threads. With \WorstAlgo{} it never becomes clear.
+Table~\ref{tab:by-algorithm} and Fig.~\ref{fig:bars} compare the algorithms over all thread counts. The second column of the table shows that the VLM names most COCO classes in the original photos for every algorithm, so the differences in retention come from threading. Thread painter and greedy residual keep the most. Anchor web and stipple tour keep the least. YOLO ranks the algorithms in almost the same order. The Spearman rank correlation between the two rankings is \RankCorr{}, where 1 would mean the same order. Fig.~\ref{fig:grid-bw} shows the difference on one scene. With \BestAlgo{} the aircraft is clear from a few thousand threads. With \WorstAlgo{} it never becomes clear.
 
 \input{data/tab_by_algorithm.tex}
 
@@ -250,22 +267,22 @@ Table~\ref{tab:by-algorithm} and Fig.~\ref{fig:bars} compare the algorithms over
 \legend{VLM, YOLO}
 \end{axis}
 \end{tikzpicture}
-\caption{Both models rank the algorithms in almost the same order. Retention is averaged over thread counts 2,000 to 10,000.}
+\caption{Both models rank the algorithms in almost the same order.}
 \label{fig:bars}
 \end{figure}
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/grid_best_worst.png}
-\caption{The algorithm with the highest recall keeps the aircraft recognisable at every thread count, and the worst never does. The middle row is the algorithm with the best balance of recall and efficiency (Fig.~\ref{fig:pareto}), which becomes recognisable from about 10,000 threads at a fraction of the drawing time. Shown on the scene of Fig.~\ref{fig:grid-algorithms}.}
+\caption{The best algorithm, the best balance of recall and efficiency, and the worst, on the scene of Fig.~\ref{fig:grid-algorithms}.}
 \label{fig:grid-bw}
 \end{figure*}
 
 \subsection{More threads help less than a better algorithm}
 
-Fig.~\ref{fig:threads} shows retention averaged over all algorithms as the thread count grows. Both models improve with more threads, but slowly. Going from 2,000 to 10,000 threads raises VLM retention by \VlmGainThreads{} points and YOLO retention by \YoloGainThreads{} points. Choosing the best algorithm instead of the worst changes VLM retention by \VlmGapAlgos{} points and YOLO retention by \YoloGapAlgos{} points (Table~\ref{tab:by-algorithm}). For both models, the choice of algorithm matters about twice as much as a fivefold increase in threads.
+Fig.~\ref{fig:threads} shows retention averaged over all algorithms as the thread count grows. Both models improve with more threads, but slowly. Going from 2,000 to 10,000 threads, where every combination holds 15 scenes, raises VLM retention by \VlmGainThreads{} points and YOLO retention by \YoloGainThreads{} points. Choosing the best algorithm instead of the worst changes VLM retention by \VlmGapAlgos{} points and YOLO retention by \YoloGapAlgos{} points (Table~\ref{tab:by-algorithm}). For both models, the choice of algorithm matters about twice as much as a fivefold increase in threads.
 
-Fig.~\ref{fig:heatmaps} confirms this for every combination of algorithm and thread count, for the VLM and for pretrained YOLO on the same scenes. In the recall maps on the left, the top rows stay bright and the bottom rows stay dark at every thread count. The efficiency maps on the right show the other side of the choice. The algorithms with the highest recall are among the least efficient, because they take far longer to draw. Section~\ref{sec:choosing} returns to this trade-off.
+Fig.~\ref{fig:heatmaps} confirms this for every combination of algorithm and thread count, for the VLM and for YOLO on the same scenes. Each row is one algorithm, sorted by the model's average recall and kept in place across a row of maps. Efficiency is shown on a log scale, and VLM cells hold 5 to 15 scenes. In the recall maps on the left, the top rows stay bright and the bottom rows stay dark at every thread count. The efficiency maps on the right show the other side of the choice. The algorithms with the highest recall are among the least efficient, because they take far longer to draw. Section~\ref{sec:choosing} returns to this trade-off.
 
 \begin{figure}[t]
 \centering
@@ -277,7 +294,7 @@ Fig.~\ref{fig:heatmaps} confirms this for every combination of algorithm and thr
 \legend{VLM, YOLO}
 \end{axis}
 \end{tikzpicture}
-\caption{More threads help both models, but slowly. Retention is averaged over all ten algorithms. YOLO was tested up to 10,000 threads.}
+\caption{More threads help both models, but slowly.}
 \label{fig:threads}
 \end{figure}
 
@@ -285,7 +302,7 @@ Fig.~\ref{fig:heatmaps} confirms this for every combination of algorithm and thr
 \centering
 \pgfplotsset{
   hm/.style={
-    width=0.34\textwidth, height=0.25\textwidth,
+    width=0.245\textwidth, height=0.25\textwidth,
     enlargelimits=false, axis on top, colorbar,
     colorbar style={font=\scriptsize, width=2.2mm},
     ytick={0,...,9}, y dir=reverse, xtick={0,...,9}, xticklabels={2,4,6,8,10,12,14,16,18,20},
@@ -296,6 +313,8 @@ Fig.~\ref{fig:heatmaps} confirms this for every combination of algorithm and thr
     colorbar style={ylabel={Recall (\%)}, ylabel style={font=\scriptsize}}},
   eff/.style={hm, colormap/hot2, point meta min=0, point meta max=2.5, yticklabels={},
     colorbar style={ytick={0,0.301,1.041,2.004}, yticklabels={0,1,10,100}, ylabel={Efficiency (log)}, ylabel style={font=\scriptsize}}},
+  perkb/.style={hm, colormap/cool, point meta min=0, yticklabels={},
+    colorbar style={ylabel={Recall per KB}, ylabel style={font=\scriptsize}}},
 }
 \begin{tikzpicture}
 \begin{axis}[rec, title={VLM: recall}, yticklabels/.expand once=\VlmHeatOrder]
@@ -307,6 +326,12 @@ Fig.~\ref{fig:heatmaps} confirms this for every combination of algorithm and thr
 \begin{axis}[eff, title={VLM: efficiency}]
 \addplot[matrix plot*, mesh/cols=10, point meta=explicit] table[meta=z] {data/heat_vlm_eff.dat};
 \bestrow{\VlmParetoY}
+\end{axis}
+\end{tikzpicture}\hspace{0.5em}%
+\begin{tikzpicture}
+\begin{axis}[perkb, title={VLM: recall per KB}, point meta max=2.25]
+\addplot[matrix plot*, mesh/cols=10, point meta=explicit] table[meta=z] {data/heat_vlm_kb.dat};
+\bestrow{\SizeOnlyVlmY}
 \end{axis}
 \end{tikzpicture}\\[4pt]
 \begin{tikzpicture}
@@ -320,15 +345,21 @@ Fig.~\ref{fig:heatmaps} confirms this for every combination of algorithm and thr
 \addplot[matrix plot*, mesh/cols=10, point meta=explicit] table[meta=z] {data/heat_yolo_eff.dat};
 \bestrow{\YoloParetoY}
 \end{axis}
+\end{tikzpicture}\hspace{0.5em}%
+\begin{tikzpicture}
+\begin{axis}[perkb, title={YOLO (pretrained): recall per KB}, point meta max=0.5]
+\addplot[matrix plot*, mesh/cols=10, point meta=explicit] table[meta=z] {data/heat_yolo_kb.dat};
+\bestrow{\SizeOnlyYoloY}
+\end{axis}
 \end{tikzpicture}
-\caption{The algorithm with the highest recall has the lowest efficiency. Left: recall on thread images. Right: efficiency, which is recall divided by (file size $\times$ drawing time), on a log scale. Each row is one algorithm and keeps its place across a pair, sorted by the model's average recall. The outlined row is the algorithm with the best balance of recall and efficiency (Fig.~\ref{fig:pareto}). Both models were tested on the same scenes. VLM cells cover 5 to 15 scenes each.}
+\caption{Recall, efficiency and recall per kilobyte for every algorithm and thread count. Outlines mark the chosen algorithms.}
 \label{fig:heatmaps}
 \end{figure*}
 
 
 \subsection{A good algorithm needs fewer bytes than the original JPEG}
 
-Fig.~\ref{fig:size} shows retention against file size. The compressed thread list grows from about \XzKBlow{} kilobytes (KB) at 2,000 threads to about \XzKBhigh{}~KB at 20,000 threads. Even the largest is smaller than the original JPEG file, which averages \JpegMeanKB{}~KB. At the same file size, the best algorithm keeps far more than the worst for both models. A small file is only useful if the algorithm places its threads where they keep the shape of the scene.
+Fig.~\ref{fig:size} shows retention against file size. The compressed thread list grows from about \XzKBlow{} kilobytes (KB) at 2,000 threads to about \XzKBhigh{}~KB at 20,000 threads. Even the largest is smaller than the original JPEG file, which averages \JpegMeanKB{}~KB. At the same file size, the best algorithm keeps far more than the worst for both models (\VlmBest{} and \VlmWorst{} for the VLM, \YoloBest{} and \YoloWorst{} for YOLO). Each point pools two neighbouring thread counts. A small file is only useful if the algorithm places its threads where they keep the shape of the scene.
 
 \begin{figure}[t]
 \centering
@@ -358,7 +389,7 @@ Fig.~\ref{fig:size} shows retention against file size. The compressed thread lis
 \legend{best algorithm, worst algorithm, average of all ten}
 \end{axis}
 \end{tikzpicture}
-\caption{Every thread list is smaller than the original JPEG, but only a good algorithm keeps the scene recognisable. The best and worst algorithms are those with the highest and lowest average retention for each model: \VlmBest{} and \VlmWorst{} for the VLM, \YoloBest{} and \YoloWorst{} for YOLO. Each point is one thread count. VLM points pool two neighbouring thread counts (10 to 30 scenes per point). YOLO points cover 2,000 to 10,000 threads.}
+\caption{Retention against file size. Every thread list is smaller than the original JPEG, but only a good algorithm keeps the scene.}
 \label{fig:size}
 \end{figure}
 
@@ -366,63 +397,60 @@ Fig.~\ref{fig:size} shows retention against file size. The compressed thread lis
 \subsection{Choosing an algorithm}
 \label{sec:choosing}
 
-Recall alone favours algorithms that are slow to draw or that produce large files. Table~\ref{tab:efficiency} therefore lists, for every algorithm at every thread count, the time to draw one image, the file size, the recall of both models and an efficiency score. The efficiency score is recall divided by the product of file size and time, so it rewards algorithms that buy recall cheaply.
+Recall alone favours algorithms that are slow to draw or that produce large files. Table~\ref{tab:efficiency} therefore lists, for every algorithm at every thread count, the time to draw one image, the file size, the recall of both models and an efficiency score. The efficiency score is recall divided by the product of file size and time, in percent per KB-second, so it rewards algorithms that buy recall cheaply. Time is the C++ threading step on one 640$\times$480 image. In each column of the table the highest recall is underlined and the highest efficiency is in bold.
 
 \IfFileExists{data/tab_efficiency.tex}{\input{data/tab_efficiency.tex}}{}
 
-To choose one algorithm for each model, we use the average over all ten thread counts (the last column of Table~\ref{tab:efficiency}), because single cells rest on few scenes. Fig.~\ref{fig:pareto} plots each algorithm's average recall against its average efficiency. The algorithms on the front are those that no other algorithm beats on both at once. Of these, we pick the one closest to the ideal corner, where both recall and efficiency are highest. For both models this is \VlmParetoName{}. It keeps \VlmParetoRecall\% recall for the VLM and \YoloParetoRecall\% for YOLO at an efficiency of \VlmParetoEff{} and \YoloParetoEff{}. Thread painter has the highest recall for both models, but it is among the least efficient algorithms because it takes far longer to draw.
+To choose one algorithm for each model, we use the average over all ten thread counts (the last column of Table~\ref{tab:efficiency}), because single cells rest on few scenes. We compare each algorithm's average recall with its average efficiency. The algorithms on the front are those that no other algorithm beats on both at once. Of these, we pick the one closest to the ideal corner, where both recall and efficiency are highest. For both models this is \VlmParetoName{}. It keeps \VlmParetoRecall\% recall for the VLM and \YoloParetoRecall\% for YOLO at an efficiency of \VlmParetoEff{} and \YoloParetoEff{}. Thread painter has the highest recall for both models, but it is among the least efficient algorithms because it takes far longer to draw. The choice does not depend on compression. Using the uncompressed size of 9 bytes per thread instead, \VlmParetoName{} remains the best balance for both models.
 
-\begin{figure}[t]
-\centering
-\pgfplotsset{
-  pf/.style={paper, width=0.92\columnwidth, height=4.4cm, ymin=0,
-    xmin=-0.05, xmax=2.2, xtick={0,0.301,1.041,2.004}, xticklabels={0,1,10,100},
-    xlabel={Average efficiency (log scale)}, ylabel={Average recall (\%)},
-    title style={font=\footnotesize, yshift=-3pt}, legend style={at={(0.5,-0.42)}}},
-}
-\begin{tikzpicture}
-\begin{axis}[pf, title={VLM}, ymax=80]
-\addplot[only marks, mark=o, mark size=1.6pt, gray] table[x=eff, y=recall] {data/pareto_vlm.csv};
-\addplot[okBlue, thick, mark=*, mark size=1.8pt] table[x=eff, y=recall] {data/pareto_vlm_front.csv};
-\addplot[only marks, mark=o, mark size=4.5pt, black, thick] coordinates {(\VlmParetoBestE,\VlmParetoBestR)};
-\addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic,
-  every node near coord/.style={font=\tiny, anchor=west, xshift=2pt, text=black}] table[x=eff, y=recall, meta=label] {data/pareto_vlm.csv};
-\legend{algorithm, front, best balance}
-\end{axis}
-\end{tikzpicture}\\[2pt]
-\begin{tikzpicture}
-\begin{axis}[pf, title={YOLO (pretrained)}, ymax=35]
-\addplot[only marks, mark=o, mark size=1.6pt, gray] table[x=eff, y=recall] {data/pareto_yolo.csv};
-\addplot[okVermillion, thick, dashed, mark=square*, mark size=1.6pt, mark options={solid}] table[x=eff, y=recall] {data/pareto_yolo_front.csv};
-\addplot[only marks, mark=o, mark size=4.5pt, black, thick] coordinates {(\YoloParetoBestE,\YoloParetoBestR)};
-\addplot[only marks, mark=none, nodes near coords, point meta=explicit symbolic,
-  every node near coord/.style={font=\tiny, anchor=west, xshift=2pt, text=black}] table[x=eff, y=recall, meta=label] {data/pareto_yolo.csv};
-\legend{algorithm, front, best balance}
-\end{axis}
-\end{tikzpicture}
-\caption{The best balance of recall and efficiency is \VlmParetoName{} for both models. Each point is one algorithm, averaged over all ten thread counts. The line joins the algorithms that no other algorithm beats on both recall and efficiency, and the circle marks the one closest to the top right corner. Algorithms with zero recall are left unlabelled.}
-\label{fig:pareto}
-\end{figure}
+Some uses care only about bytes. A sensor that sends images over a slow radio link can spend seconds drawing one image, but every kilobyte costs air time. Table~\ref{tab:size-only} and the right column of Fig.~\ref{fig:heatmaps} therefore rank the algorithms by recall per kilobyte and ignore drawing time. The ranking changes. For both models the most recall per kilobyte comes from \SizeOnlyBest{}, \SizeOnlyBestVlm{} points per KB for the VLM and \SizeOnlyBestYolo{} for YOLO. It also reaches 30\% VLM recall with the smallest file. The best balance when time counts, \VlmParetoName{}, ranks only fifth. The best algorithm therefore depends on whether drawing time or file size is the scarce resource.
 
-\subsection{Human rater}
+This choice does not depend on how recall is counted. We repeated it with recall scored per scene instead of pooled over classes, with only the 2,000 to 10,000 threads where every combination holds 15 scenes, and with both changes together. In every case \SizeOnlyBest{} gives the most recall per kilobyte for both models, and the ranking of the algorithms correlates with the main ranking at a Spearman coefficient of at least \RobustMinRho{}. Only the best thread count moves, between \RobustCarries{} threads.
 
-\todo{human results, once all 500 thread images are rated.}
+In the main set each scene is drawn by one algorithm only, so an algorithm could gain from receiving easier scenes. We therefore ran a balanced check with YOLO, which costs no extra VLM answers. We took \BalScenes{} scenes, one from each combination of the VLM set, and resized each to 0.31 megapixels so that a thread count means the same density in every scene. Every scene was then drawn by every algorithm at every thread count (Table~\ref{tab:balanced}). The resulting ranking matches YOLO's ranking on the main set at a Spearman coefficient of \BalRhoYolo{} and the VLM's at \BalRhoVlm{}, so the main results do not depend on which scenes each algorithm received. As on the main set, YOLO places \BalTop{} slightly ahead of \BalSecond{}, while the VLM places \BalSecond{} first.
+
+\IfFileExists{data/tab_balanced.tex}{\input{data/tab_balanced.tex}}{}
+
+\IfFileExists{data/tab_size_only.tex}{\input{data/tab_size_only.tex}}{}
+
+\subsection{Human raters}
+\label{sec:human}
+
+\todo{human results per rater and averaged over raters, with agreement between raters, once all three have rated all 1,000 thread images.}
 
 % =====================================================================
 \section{Discussion}
 
 \textbf{Sending images over weak links.} A thread list is a short program for drawing a picture. A drone, a field sensor or a satellite link could send the list and let the receiver draw it. Fig.~\ref{fig:size} shows that the algorithm decides whether this works. With the best algorithm a list smaller than the original JPEG keeps much of what a model recognises, while with the worst the same number of bytes keeps almost nothing.
 
-\textbf{Sharing scenes privately.} Threading removes faces, text and fine detail, so it seems a good way to share a scene without revealing it. However, with the best algorithms a model still recognises much of the scene. Earlier work found the same for blurring and pixelation \cite{mcpherson2016}. With the weakest algorithms little survives. The algorithm and thread count can be chosen to show more or less, but the choice should be tested with a model, not judged by eye.
+\textbf{Sharing scenes privately.} Threading removes faces, text and fine detail, so it seems a good way to share a scene without revealing it. However, with the best algorithms a model still recognises much of the scene. Earlier work found the same for blurring and pixelation \cite{mcpherson2016}. With the weakest algorithms little survives. The algorithm and thread count can be chosen to show more or less, but the choice should be tested with models and with people, not judged by eye.
 
-\textbf{Testing how models see shape.} Thread images keep outlines and rough tone but remove texture. The VLM recognises the original photos well, so its retention shows how much it depends on what threading removes. Thread images are therefore a cheap and adjustable addition to existing tests of image damage \cite{hendrycks2019,michaelis2019} and of shape bias \cite{geirhos2019texture}.
+\textbf{Testing how models see shape.} Thread images keep outlines and rough tone but remove texture. The VLM recognises the original photos well, so its retention shows how much it depends on what threading removes. Comparing the models with the human raters will show whether people keep more of the scene. Thread images are therefore a cheap and adjustable addition to existing tests of image damage \cite{hendrycks2019,michaelis2019} and of shape bias \cite{geirhos2019texture}.
 
-\textbf{Limitations.} Each VLM cell holds 5 to 15 scenes, so single cells are noisy. Rows, columns and averages are more reliable. We tested one VLM, and other VLMs may rank the algorithms differently. YOLO was scored against its own boxes on the original photos, not against human-drawn boxes. The human study has one rater, who also built the algorithms, so its results will be reported as preliminary.
+\textbf{Limitations.} Each VLM cell holds 5 to 15 scenes, so single cells are noisy. Rows, columns and averages are more reliable. We tested one VLM, and other VLMs may rank the algorithms differently. YOLO was used without fine-tuning, so its retention shows how a detector trained on photos copes with thread images, not how well one could learn them. Scenes in the VLM set keep their original size, from 0.04 to 0.41 megapixels, and each scene is drawn by one algorithm only. The balanced check controls both, but only for YOLO. The human study has three raters. One of them built the algorithms and may know their patterns, so we report each rater separately as well as their average.
+
+% =====================================================================
+\section{Future Work}
+\label{sec:future}
+
+This paper is the first in a planned series of conference papers. Each later paper starts from the setting fixed here, \SizeOnlyBest{} at \CarryThreads{} threads, and adds one application. First, we plan a detector that reads the thread list directly instead of a rendered image. An earlier pilot in which YOLO was fine-tuned on thread images raised its retention several-fold, so that detector will be compared with a fine-tuned YOLO. Second, we plan region-aware threading that hides faces and licence plates while keeping the rest of the scene recognisable, for example to count cars in a parking lot. Third, we plan a simulated feasibility study of sending thread lists over LoRa, a low-power radio link. Our smallest lists of about 15~KB take roughly 40 minutes per image under the European duty-cycle limit. A pilot on 50 scenes shows that fewer threads do not solve this. Thread painter fits in 1 to 2~KB only at 100 to 200 threads, where nothing in the scene is recognisable. LoRa therefore needs a more compact coding of each thread rather than fewer threads. Finally, we plan a model that generates thread images directly from a text prompt.
 
 % =====================================================================
 \section{Conclusion}
+\label{sec:conclusion}
 
-Whether a machine can see thread art depends mostly on how the threads are placed. For both the VLM and YOLO, choosing a better algorithm matters about twice as much as adding five times more threads. The best algorithms keep much of the scene, and the worst keep almost nothing. Comparing each thread image with its original photo shows that the losses come from threading. Threading also rarely makes the VLM see objects that are not there. Every compressed thread list we tested is smaller than its original JPEG file, but only a good algorithm turns those bytes into a recognisable scene. When drawing time and file size matter, Table~\ref{tab:efficiency} shows which algorithm and thread count give the most recognition for the cost.
+Whether machines can see thread art depends mostly on how the threads are placed. For both the VLM and YOLO, choosing a better algorithm matters about twice as much as adding five times more threads. The best algorithms keep much of the scene, and the worst keep almost nothing. Comparing each thread image with its original photo shows that the losses come from threading. Threading also rarely makes the VLM see objects that are not there. Every compressed thread list we tested is smaller than its original JPEG file, but only a good algorithm turns those bytes into a recognisable scene. When drawing time and file size matter, Table~\ref{tab:efficiency} shows which algorithm and thread count give the most recognition for the cost. When only file size matters, the most recognition per kilobyte comes from \SizeOnlyBest{} (Table~\ref{tab:size-only}).
+
+This benchmark settles four choices for later work. The algorithm is \SizeOnlyBest{}, because it gives the most recall per kilobyte for both models. The thread count is \CarryThreads{}, where \SizeOnlyBest{} gives the most recall per kilobyte for both models together. Other ways of counting recall give \RobustCarries{} threads, so later work should treat this as a range rather than a single value. At this setting a thread list takes about \CarryKB{}~KB and keeps \CarryVlm\% VLM recall and \CarryYolo\% YOLO recall. A thread list is a viable alternative to the original JPEG, since it is smaller at every thread count we tested. The VLM and YOLO rank the algorithms in nearly the same order (rank correlation \RankCorr), so either can judge new algorithms. \todo{whether the three raters agree with each other and with the models, once all 1,000 thread images are rated.}
+
+% =====================================================================
+\appendices
+\section{Inside the Algorithms}
+\label{app:internals}
+
+Figs.~\ref{fig:internals-a} and~\ref{fig:internals-b} show what each algorithm computes on the way from the photo to the threads, using the scene of Fig.~\ref{fig:grid-algorithms}. Each row runs from the input photo through three internal states to the output at 10,000 threads, and zoomed panels show the cockpit and engine. Maps without randomness are recomputed exactly from the algorithm, partial results use the real thread order, and candidate lines are fresh samples drawn by the same rules.
+
+\input{figs/internals.tex}
 
 % =====================================================================
 \begin{thebibliography}{99}

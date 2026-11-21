@@ -3,9 +3,9 @@ thread painter,26.03,0.0165,1
 greedy residual,25.27,0.1608,1
 quadtree hatch,10.83,1.0599,1
 radon peel,6.58,0.0928,0
-edge tangent,1.38,0.4666,0
-flow streamlines,4.59,0.8835,0
 greedy error,4.01,0.7564,0
+flow streamlines,4.59,0.8835,0
+edge tangent,1.38,0.4666,0
 ,0.00,0.0000,0
 ,0.00,0.0000,0
 ,0.00,0.0000,0

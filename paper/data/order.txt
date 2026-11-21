@@ -2,9 +2,9 @@ thread_painter
 greedy_residual
 quadtree_hatch
 radon_peel
-edge_tangent
-flow_streamlines
 greedy_error
+flow_streamlines
+edge_tangent
 scanline_dashes
 anchor_web
 stipple_tour

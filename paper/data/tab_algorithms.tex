@@ -1,6 +1,6 @@
 \begin{table}[t]
 \centering
-\caption{The ten threading algorithms, in the order used throughout the paper}
+\caption{The ten threading algorithms, ordered by VLM retention}
 \label{tab:algorithms}
 \footnotesize
 \begin{tabular}{@{}lp{5.5cm}@{}}
@@ -11,9 +11,9 @@ thread painter & Adds the line that most reduces the colour error, then refines 
 greedy residual & Like thread painter, with candidate lines drawn from where the error is largest \\
 quadtree hatch & Splits the image into cells and hatches busy cells along their edges \\
 radon peel & Repeatedly removes the strongest straight line of ink from the image \\
-edge tangent & Places fixed short segments along strong edges \\
-flow streamlines & Follows the edge direction field and lays long chords along it \\
 greedy error & Grows short rays from important points and keeps the most uniform one \\
+flow streamlines & Follows the edge direction field and lays long chords along it \\
+edge tangent & Places fixed short segments along strong edges \\
 scanline dashes & Places horizontal dashes row by row, one per unit of ink \\
 anchor web & Links nearby important points with short straight edges \\
 stipple tour & Scatters dots by darkness and joins them with one nearest-neighbour path \\

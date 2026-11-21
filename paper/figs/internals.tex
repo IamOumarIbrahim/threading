@@ -1,0 +1,53 @@
+% Inside views of the ten algorithms, five per figure. Each row runs from the
+% input photo through three internal states to the output at 10,000 threads.
+% Panels come from paper/scripts/make_internals.py (figs/internals/*.jpg).
+\newcommand{\algrow}[6]{%
+  % #1 file prefix, #2 algorithm name, #3-#5 panel captions, #6 row index
+  \begin{scope}[yshift=-#6*3.55cm]
+    \node[rotate=90, font=\small\bfseries, anchor=south] at (-0.15,0) {#2};
+    \node[algthumb] (i) at (1.6,0) {\includegraphics[width=\tw]{figs/internals/input.jpg}};
+    \node[algthumb] (a) at (5.3,0) {\includegraphics[width=\tw]{figs/internals/#1_1.jpg}};
+    \node[algthumb] (b) at (9.0,0) {\includegraphics[width=\tw]{figs/internals/#1_2.jpg}};
+    \node[algthumb] (c) at (12.7,0) {\includegraphics[width=\tw]{figs/internals/#1_3.jpg}};
+    \node[algthumb] (o) at (16.4,0) {\includegraphics[width=\tw]{figs/internals/#1_out.jpg}};
+    \foreach \p/\q in {i/a, a/b, b/c, c/o} \draw[algstep] (\p.east) -- (\q.west);
+    \node[algcap] at (i.south) {input photo};
+    \node[algcap] at (a.south) {#3};
+    \node[algcap] at (b.south) {#4};
+    \node[algcap] at (c.south) {#5};
+    \node[algcap] at (o.south) {output, 10,000 threads};
+  \end{scope}}
+\tikzset{
+  algthumb/.style={inner sep=0, draw=black!40, line width=0.3pt},
+  algcap/.style={anchor=north, font=\scriptsize, align=center, text width=3.2cm, yshift=-1pt},
+  algstep/.style={->, >={Stealth[length=1.6mm]}, thick, draw=black!70, shorten <=1pt, shorten >=1pt},
+}
+\def\tw{3.2cm}
+
+\begin{figure*}[p]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\algrow{thread_painter}{thread painter}{colour error to the photo,\\where new lines are tried}{160 candidate lines,\\the best in red}{after 2,000 threads}{0}
+\algrow{greedy_residual}{greedy residual}{error left after\\1,500 threads}{20 candidates from\\high error, best in red}{after 5,000 threads,\\lines get shorter}{1}
+\algrow{quadtree_hatch}{quadtree hatch}{cells split where\\colour varies}{threads given\\to each cell}{hatching inside\\cells (zoom)}{2}
+\algrow{radon_peel}{radon peel}{ink still needed}{line sums for every angle\\(peak circled)}{first 40 lines\\peeled, in red}{3}
+\algrow{greedy_error}{greedy error}{importance from\\edge strength}{8 rays per start point,\\the most uniform in red (zoom)}{after 3,000 rays}{4}
+\end{tikzpicture}}
+\caption{Inside view of the five algorithms with the highest VLM retention, from input through three internal states to output.}
+\label{fig:internals-a}
+\end{figure*}
+
+\begin{figure*}[p]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\algrow{flow_streamlines}{flow streamlines}{edge direction field}{ink still needed\\per $4\times4$ cell}{streamlines cut into\\straight chords}{0}
+\algrow{edge_tangent}{edge tangent}{edge strength}{segments placed across\\the gradient (zoom)}{after 3,000 segments}{1}
+\algrow{scanline_dashes}{scanline dashes}{ink needed}{one row: a dash ends\\at each unit of ink}{dashes row by row\\(zoom)}{2}
+\algrow{anchor_web}{anchor web}{anchor points drawn\\by edge strength}{anchors ordered\\in vertical strips}{links between\\nearby anchors (zoom)}{3}
+\algrow{stipple_tour}{stipple tour}{smoothed darkness}{dots scattered\\by darkness}{one nearest-neighbour\\path (zoom)}{4}
+\end{tikzpicture}}
+\caption{Inside view of the five algorithms with the lowest VLM retention.}
+\label{fig:internals-b}
+\end{figure*}

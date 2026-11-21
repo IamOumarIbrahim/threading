@@ -94,10 +94,7 @@ for name in ("vlm", "yolo"):
             f.write(f"{A[m][0]:.2f},{math.log10(1 + A[m][1]):.4f}\n")
 
 with open(D / "tab_efficiency.tex", "w") as f:
-    f.write("\\begin{table*}[t]\n\\centering\n\\caption{Recall and efficiency of every algorithm at every thread count. Each cell gives recall (\\%) / efficiency. "
-            "Efficiency is recall divided by (file size $\\times$ drawing time), in \\% per KB-second, so higher means more recognition for less cost. "
-            "File size is the compressed thread list, and drawing time is the C++ time of the threading step on one 640$\\times$480 image. "
-            "The last column averages over all ten thread counts. In each column the highest recall is underlined and the highest efficiency is in bold. For each model, the circled average marks the algorithm with the best balance of recall and efficiency (Fig.~\\ref{fig:pareto}).}\n"
+    f.write("\\begin{table*}[t]\n\\centering\n\\caption{Recall (\\%) / efficiency of every algorithm at every thread count. Circles mark the best balance for each model.}\n"
             "\\label{tab:efficiency}\n\\scriptsize\n\\setlength{\\tabcolsep}{2.3pt}\n\\begin{tabular}{@{}l" + "r" * 10 + "|r@{}}\n\\toprule\n")
     f.write("Algorithm & " + " & ".join(f"{t // 1000}k" for t in THREADS) + " & Average \\\\\n")
     for title, rk, ek in (("VLM", "v", "ve"), ("YOLO (pretrained)", "y", "ye")):

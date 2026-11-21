@@ -42,7 +42,7 @@
 \node[lab] at (6.4,\ya+\lb) {vision\\encoder};
 \foreach \i in {0,...,5} \node[draw=black!60, fill=okSky!70, minimum size=0.2cm, inner sep=0] at (7.25+0.28*\i,\ya) {};
 \node[lab] at (7.95,\ya+\lb) {image\\tokens};
-\node[card, font=\scriptsize\itshape] (prompt) at (7.95,\ya+0.85) {prompt: ``name every object''};
+\node[card, font=\scriptsize\itshape] (prompt) at (7.95,\ya+0.8) {prompt:\\``name every object''};
 \draw[flow] (prompt.south) -- (7.95,\ya+0.18);
 \pic at (9.4,\ya,0) {Box={name=llm, caption=, fill=okBlue!45, opacity=1, height=13, width={1.6,1.6,1.6,1.6}, depth=13, scale=0.1}};
 \node[lab] at (9.85,\ya+\lb) {language\\model};
@@ -52,7 +52,7 @@
 
 % ------------------------------------------------------------ YOLO row
 \node[title] (t2) at (3.3,\yb+1.5) {YOLO};
-\node[sub] at ($(t2.east)+(0.1,0)$) {YOLOv12n, fine-tuned on thread images};
+\node[sub] at ($(t2.east)+(0.1,0)$) {YOLOv12n, used as released};
 \draw[flow] (3.3,\yb) -- (3.6,\yb);
 \draw[flow] (4.0,\yb) -- (4.55,\yb);
 \draw[flow] (4.95,\yb) -- (5.5,\yb);
@@ -76,8 +76,8 @@
 \node[lab] at (\outx,\yb+\lb) {boxes with classes};
 
 % ------------------------------------------------------------ human row
-\node[title] (t3) at (3.3,\yc+1.2) {Human rater};
-\node[sub] at ($(t3.east)+(0.1,0)$) {first author, results to be added};
+\node[title] (t3) at (3.3,\yc+1.2) {Human raters};
+\node[sub] at ($(t3.east)+(0.1,0)$) {three raters, results to be added};
 \fill[okGreen!70!black] (3.85,\yc+0.2) circle (0.15);
 \fill[okGreen!70!black] (3.55,\yc-0.4) .. controls (3.55,\yc+0.05) and (4.15,\yc+0.05) .. (4.15,\yc-0.4) -- cycle;
 \node[card, font=\scriptsize, text width=4.3cm] (hui) at (7.4,\yc) {web app: one image at a time,\\answers typed freely, no list of classes};
@@ -88,8 +88,8 @@
 \node[lab] at (\outx,\yc-0.45) {object names};
 
 % ------------------------------------------------------------ how each row is scored
-\node[score, anchor=west] (s1) at (\outx+1.75,\ya) {mapped to\\COCO classes,\\scored by recall};
-\node[score, anchor=west] (s2) at (\outx+1.75,\yb) {compared with\\reference boxes,\\scored by mAP50};
-\node[score, anchor=west] (s3) at (\outx+1.75,\yc) {mapped to\\COCO classes,\\scored by recall};
+\node[score, anchor=west] (s1) at (\outx+2.05,\ya) {mapped to\\COCO classes,\\scored by recall};
+\node[score, anchor=west] (s2) at (\outx+2.05,\yb) {mapped to\\COCO classes,\\scored by recall};
+\node[score, anchor=west] (s3) at (\outx+2.05,\yc) {mapped to\\COCO classes,\\scored by recall};
 \draw[flow, dashed] (vout.east) -- (s1.west); \draw[flow, dashed] (yout.east) -- (s2.west); \draw[flow, dashed] (hout.east) -- (s3.west);
 \end{tikzpicture}

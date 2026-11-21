@@ -1,0 +1,25 @@
+\begin{table}[t]
+\centering
+\caption{Recall per kilobyte, drawing time ignored. The last column is the smallest file reaching 30\% VLM recall.}
+\label{tab:size-only}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrr}
+\toprule
+ & \multicolumn{2}{c}{Recall per KB} & Smallest \\
+\cmidrule(lr){2-3}
+Algorithm & VLM & YOLO & KB, 30\% VLM \\
+\midrule
+thread painter & \textbf{1.10} & \textbf{0.30} & 30 \\
+radon peel & 0.76 & 0.17 & 38 \\
+greedy residual & 0.73 & 0.24 & 45 \\
+flow streamlines & 0.61 & 0.08 & 50 \\
+quadtree hatch & 0.53 & 0.12 & 55 \\
+scanline dashes & 0.50 & 0.00 & 52 \\
+greedy error & 0.35 & 0.04 & 90 \\
+edge tangent & 0.26 & 0.02 & 84 \\
+stipple tour & 0.08 & 0.00 & -- \\
+anchor web & 0.07 & 0.00 & 103 \\
+\bottomrule
+\end{tabular}
+\end{table}

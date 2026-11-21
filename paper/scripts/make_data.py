@@ -9,11 +9,12 @@ One measure is used for both models throughout the paper:
   VLM  : score = recall against the COCO classes. Only scenes whose original
          photo has also been answered are used, so both scores cover the same
          scenes.
-  YOLO : score = test mAP50 (reports/threaded_benchmark_results.md already
-         gives it as % of the score on the original photos).
+  YOLO : pretrained YOLOv12n, no fine-tuning. score = recall against the same
+         COCO classes as the VLM, from the classes it finds at confidence 0.3
+         (paper/data/yolo_pre_*.csv, written by yolo_pretrained.py).
 
-The two models are compared over the thread counts both cover:
-2,000, 4,000, 6,000, 8,000 and 10,000.
+Both models and the human raters see the same 1,000 thread images, at
+2,000 to 20,000 threads in steps of 2,000, and every result uses that grid.
 
 Inputs : IMAGE_DATASET/ground_truth.csv, IMAGE_DATASET/control_map.csv,
          reports/threaded_benchmark_results.md, paper/data/sizes.csv,
@@ -34,8 +35,7 @@ ORIGINAL = Path(os.environ.get("ORIGINAL_PRED", ROOT / "paper" / "vlm" / "round1
 ALGOS = ["anchor_web", "edge_tangent", "flow_streamlines", "greedy_error", "greedy_residual",
          "quadtree_hatch", "radon_peel", "scanline_dashes", "stipple_tour", "thread_painter"]
 VLM_T = list(range(2000, 20001, 2000))
-YOLO_T = list(range(1000, 10001, 1000))
-COMMON = [2000, 4000, 6000, 8000, 10000]
+COMMON = VLM_T          # one grid for every judge
 nice = lambda m: m.replace("_", " ")
 f1 = lambda x: f"{x:.1f}"
 
@@ -80,17 +80,30 @@ def vlm_ret(sel):
     o = recall(sel, org)
     return 100 * recall(sel, thr) / o if o else 0.0
 
-# ---- YOLO retention (test mAP50 as % of the score on the original photos) ----
-txt = (ROOT / "reports/threaded_benchmark_results.md").read_text()
-yolo_base = float(re.search(r"\*\*Test mAP50\*\*: `([\d.]+)`", txt).group(1))
-sec = txt.split("## Normalized Detection Performance")[1].split("\n---\n")[0]
-yolo = {}
-for row in sec.splitlines():
-    m = re.match(r"\| \*\*`(\w+)`\*\* \| ([\d,]+) \|(.*)", row)
-    if m:
-        cells = [c.strip().rstrip("%") for c in m.group(3).split("|") if c.strip()]
-        yolo[(m.group(1), int(m.group(2).replace(",", "")))] = float(cells[4])
-yolo_ret = lambda m, ts: statistics.mean(yolo[(m, t)] for t in ts)
+# ---- YOLO retention: pretrained YOLOv12n, recall on thread images / recall on originals ----
+ypre = {}
+for f in ("yolo_pre_round1.csv", "yolo_pre_extra.csv"):
+    for r in csv.DictReader(open(OUT / f)):
+        ypre[r["image_id"]] = r
+ythr = {i: {c for c in r["found_thread"].split("|") if c} for i, r in ypre.items()}
+yorg = {i: {c for c in r["found_original"].split("|") if c} for i, r in ypre.items()}
+
+def ysel(method=None, threads=None):
+    ts = threads if isinstance(threads, list) else [threads]
+    return [i for i in gt if i in ypre and truth[i]
+            and (method is None or gt[i]["method"] == method)
+            and (threads is None or int(gt[i]["threads"]) in ts)]
+
+def yrecall(sel, found):
+    tru = sum(len(truth[i]) for i in sel)
+    return 100 * sum(len(truth[i] & found[i]) for i in sel) / tru if tru else 0.0
+
+def yolo_ret_sel(sel):
+    o = yrecall(sel, yorg)
+    return 100 * yrecall(sel, ythr) / o if o else 0.0
+
+yolo_ret = lambda m, ts: yolo_ret_sel(ysel(m, ts))
+yolo_cell = lambda m, t: yolo_ret_sel(ysel(m, t))
 
 # ---- file sizes ----
 sizes = {r["image_id"]: r for r in csv.DictReader(open(OUT / "sizes.csv"))}
@@ -123,7 +136,7 @@ DESC = {
     "stipple_tour": "Scatters dots by darkness and joins them with one nearest-neighbour path",
 }
 with open(OUT / "tab_algorithms.tex", "w") as f:
-    f.write("\\begin{table}[t]\n\\centering\n\\caption{The ten threading algorithms, in the order used throughout the paper}\n\\label{tab:algorithms}\n\\footnotesize\n"
+    f.write("\\begin{table}[t]\n\\centering\n\\caption{The ten threading algorithms, ordered by VLM retention}\n\\label{tab:algorithms}\n\\footnotesize\n"
             "\\begin{tabular}{@{}lp{5.5cm}@{}}\n\\toprule\nAlgorithm & How it places threads \\\\\n\\midrule\n")
     for m in ORDER:
         f.write(f"{nice(m)} & {DESC[m]} \\\\\n")
@@ -133,7 +146,7 @@ with open(OUT / "by_algorithm.csv", "w") as f:
     for r in rows:
         f.write(f"{nice(r['m'])},{f1(r['vr'])},{f1(r['yr'])}\n")
 with open(OUT / "tab_by_algorithm.tex", "w") as f:
-    f.write("\\begin{table}[t]\n\\centering\n\\caption{Retention by algorithm, averaged over the thread counts both models were tested on (2,000 to 10,000).}\n"
+    f.write("\\begin{table}[t]\n\\centering\n\\caption{Retention by algorithm, averaged over all thread counts (2,000 to 20,000).}\n"
             "\\label{tab:by-algorithm}\n\\footnotesize\n\\setlength{\\tabcolsep}{4pt}\n\\begin{tabular}{@{}lrrrr@{}}\n\\toprule\n"
             " & \\multicolumn{3}{c}{VLM} & YOLO \\\\\n\\cmidrule(lr){2-4}\\cmidrule(l){5-5}\n"
             "Algorithm & Recall, & Recall, & Retention & Retention \\\\\n"
@@ -157,8 +170,8 @@ with open(OUT / "by_thread_count.csv", "w") as f:
         f.write(f"{t // 1000},{f1(vlm_ret(ids(threads=t)))}\n")
 with open(OUT / "yolo_by_thread_count.csv", "w") as f:
     f.write("k,yolo\n")
-    for t in YOLO_T:
-        f.write(f"{t // 1000},{f1(statistics.mean(yolo[(m, t)] for m in ALGOS))}\n")
+    for t in VLM_T:
+        f.write(f"{t // 1000},{f1(yolo_ret_sel(ysel(threads=t)))}\n")
 
 # ---- 3. heatmaps, each sorted by its own row mean (best at the top) ----
 def heat(name, cols, val):
@@ -173,7 +186,7 @@ def heat(name, cols, val):
     (OUT / f"{name}_heatmap_labels.tex").write_text(",".join(nice(m) for m in order))
     return order
 vlm_order = heat("vlm", VLM_T, lambda m, t: vlm_ret(ids(m, t)))
-yolo_order = heat("yolo", YOLO_T, lambda m, t: yolo[(m, t)])
+yolo_order = heat("yolo", VLM_T, yolo_cell)
 
 # ---- 4. retention against file size (best, worst, and the mean of all algorithms) ----
 def size_curve(name, ts, ret, order):
@@ -198,7 +211,7 @@ def size_curve_pairs(name, ret, order):
                     f"{f1(statistics.mean(kb_pair(m, p) for m in ALGOS))},{f1(statistics.mean(min(ret(m, p), 100) for m in ALGOS))}\n")
     return best, worst
 vb, vw = size_curve_pairs("vlm", lambda m, p: vlm_ret(ids(m, p)), vlm_order)
-yb, yw = size_curve("yolo", COMMON, lambda m, t: yolo[(m, t)], yolo_order)
+yb, yw = size_curve_pairs("yolo", lambda m, p: yolo_ret_sel(ysel(m, p)), yolo_order)
 
 # ---- 5. VLM on original photos against thread images ----
 no = {i: recognised(labels(org[i])) & truth[i] for i in paired_all}
@@ -216,7 +229,9 @@ mean_ret_common = vlm_ret(ids(threads=COMMON))
 with open(OUT / "numbers.tex", "w") as f:
     w = lambda k, v: f.write(f"\\newcommand{{\\{k}}}{{{v}}}\n")
     w("NumClassesPerImage", f1(statistics.mean(len(truth[i]) for i in gt)))
-    w("YoloBaseMAP", f"{yolo_base:.2f}")
+    w("YoloRecallOriginal", f"{yrecall(ysel(), yorg):.0f}")
+    w("YoloRecallThread", f"{yrecall(ysel(), ythr):.0f}")
+    w("YoloRetentionAll", f"{yolo_ret_sel(ysel()):.0f}")
     w("RankCorr", f"{rho:.2f}")
     w("JpegMeanKB", f"{jpeg_kb:.0f}")
     w("PngMeanKB", f"{statistics.mean(int(r['png_bytes']) for r in sizes.values() if 'png_bytes' in r) / 1024:.0f}")
@@ -240,10 +255,13 @@ with open(OUT / "numbers.tex", "w") as f:
     w("YoloHeatLabels", ",".join(nice(m) for m in yolo_order))
     w("LostCount", named_o - kept)
     # The paper's central comparison: what choosing the algorithm changes
-    # against what adding threads changes, over the thread counts both models share.
+    # against what adding threads changes. Thread gain: 2,000 to 10,000 threads
+    # (five times more), where every cell holds 15 scenes.
     v2, v10 = vlm_ret(ids(threads=2000)), vlm_ret(ids(threads=10000))
-    y2, y10 = statistics.mean(yolo[(m, 2000)] for m in ALGOS), statistics.mean(yolo[(m, 10000)] for m in ALGOS)
+    y2, y10 = yolo_ret_sel(ysel(threads=2000)), yolo_ret_sel(ysel(threads=10000))
     w("VlmGainThreads", f"{v10 - v2:.0f}"); w("YoloGainThreads", f"{y10 - y2:.0f}")
+    v20, y20 = vlm_ret(ids(threads=20000)), yolo_ret_sel(ysel(threads=20000))
+    w("VlmGainThreadsTen", f"{v20 - v2:.0f}"); w("YoloGainThreadsTen", f"{y20 - y2:.0f}")
     w("VlmGapAlgos", f"{rows[0]['vr'] - rows[-1]['vr']:.0f}")
     yr = sorted(r["yr"] for r in rows)
     w("YoloGapAlgos", f"{yr[-1] - yr[0]:.0f}")

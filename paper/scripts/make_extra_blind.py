@@ -7,8 +7,8 @@ Creates
   IMAGE_DATASET_EXTRA/images/<algorithm>/<threads>/<stem>.png   (kept copies)
   IMAGE_DATASET_EXTRA/ground_truth_extra.csv                     (answers, never shown to the VLM)
   IMAGE_DATASET_EXTRA/control_map_extra.csv                      (original-photo id -> thread image id)
-  ~/Desktop/Dev/blind_set_extra/          thread images named by id, shuffled order
-  ~/Desktop/Dev/blind_set_extra_original/ original photos as clean PNGs under new random ids
+  study/blind_set_extra/                   thread images named by id, shuffled order
+  study/blind_set_extra_original/          original photos as clean PNGs under new random ids
 Both blind folders get the same PROMPT.md and run.sh as round one.
 """
 import csv, random, secrets, shutil, sys
@@ -18,7 +18,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 E = ROOT / "IMAGE_DATASET_EXTRA"
 render, jpegs = Path(sys.argv[1]), Path(sys.argv[2])
-DEV = Path.home() / "Desktop" / "Dev"
+DEV = Path(__file__).resolve().parents[2] / "study"
 BT, BO = DEV / "blind_set_extra", DEV / "blind_set_extra_original"
 rows = list(csv.DictReader(open(E / "manifest_extra.csv")))
 

@@ -15,9 +15,9 @@
 
 Filography redraws a photo as thousands of straight coloured threads. This
 repository holds the ten threading algorithms, a YOLO detection benchmark on
-thread images, a human recognition study, and the paper *Can Machines See
-Thread Art?*, which tests a vision-language model (VLM) and YOLO on the same
-thread images.
+thread images, a human recognition study, and the paper *Object Recognition in
+Thread Art*, which tests a vision-language model (VLM), YOLO and a human rater
+on the same thread images.
 
 ## Project structure
 
@@ -89,7 +89,7 @@ Dataset, model selection and evaluation menus are also available in the terminal
 python src/run_terminal.py
 ```
 
-## Paper: Can Machines See Thread Art?
+## Paper: Object Recognition in Thread Art
 
 `paper/main.tex` is the IEEE conference paper and `paper/main.pdf` the built copy.
 Every number, table and figure comes from the scripts in `paper/scripts/`, so the
@@ -99,7 +99,9 @@ paper can be rebuilt from the raw results:
 python paper/scripts/make_data.py        # results, tables and numbers quoted in the text
 python paper/scripts/bootstrap.py        # 95% confidence intervals
 python paper/scripts/make_efficiency.py  # selection table, heatmaps and Pareto front
+python paper/scripts/make_size_only.py   # recall per KB table, drawing time ignored
 python paper/scripts/make_grids.py       # thumbnail grids
+python paper/scripts/make_internals.py <render_dir>  # appendix: inside view of each algorithm (needs threader --npy on figs/renders/original.jpg)
 cd paper && latexmk -pdf main.tex
 ```
 

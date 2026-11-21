@@ -1,6 +1,8 @@
 \newcommand{\NumClassesPerImage}{3.0}
-\newcommand{\YoloBaseMAP}{0.88}
-\newcommand{\RankCorr}{0.88}
+\newcommand{\YoloRecallOriginal}{69}
+\newcommand{\YoloRecallThread}{5}
+\newcommand{\YoloRetentionAll}{8}
+\newcommand{\RankCorr}{0.98}
 \newcommand{\JpegMeanKB}{158}
 \newcommand{\PngMeanKB}{330}
 \newcommand{\PairedScenes}{1000}
@@ -19,13 +21,15 @@
 \newcommand{\WorstAlgo}{stipple tour}
 \newcommand{\VlmBest}{thread painter}
 \newcommand{\VlmWorst}{stipple tour}
-\newcommand{\YoloBest}{thread painter}
-\newcommand{\YoloWorst}{anchor web}
+\newcommand{\YoloBest}{greedy residual}
+\newcommand{\YoloWorst}{stipple tour}
 \newcommand{\IdenticalMethods}{4}
 \newcommand{\VlmHeatLabels}{thread painter,greedy residual,quadtree hatch,greedy error,radon peel,flow streamlines,edge tangent,scanline dashes,anchor web,stipple tour}
-\newcommand{\YoloHeatLabels}{thread painter,flow streamlines,greedy residual,radon peel,quadtree hatch,greedy error,edge tangent,stipple tour,scanline dashes,anchor web}
+\newcommand{\YoloHeatLabels}{greedy residual,thread painter,quadtree hatch,radon peel,greedy error,flow streamlines,edge tangent,anchor web,scanline dashes,stipple tour}
 \newcommand{\LostCount}{1935}
 \newcommand{\VlmGainThreads}{28}
-\newcommand{\YoloGainThreads}{17}
-\newcommand{\VlmGapAlgos}{65}
-\newcommand{\YoloGapAlgos}{29}
+\newcommand{\YoloGainThreads}{12}
+\newcommand{\VlmGainThreadsTen}{42}
+\newcommand{\YoloGainThreadsTen}{19}
+\newcommand{\VlmGapAlgos}{67}
+\newcommand{\YoloGapAlgos}{26}

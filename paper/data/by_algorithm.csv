@@ -1,11 +1,11 @@
 label,vlm,yolo
-thread painter,66.8,37.5
-greedy residual,48.3,26.1
-quadtree hatch,22.7,22.6
-radon peel,22.3,25.1
-edge tangent,16.8,16.0
-flow streamlines,16.7,25.7
-greedy error,16.0,21.0
-scanline dashes,10.4,14.6
-anchor web,1.4,8.9
-stipple tour,1.4,14.1
+thread painter,69.1,26.4
+greedy residual,56.5,25.6
+quadtree hatch,29.8,7.4
+radon peel,27.0,7.6
+greedy error,25.2,3.0
+flow streamlines,21.7,3.9
+edge tangent,20.1,2.5
+scanline dashes,15.5,0.0
+anchor web,4.1,0.0
+stipple tour,2.4,0.0
